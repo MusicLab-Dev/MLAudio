@@ -12,5 +12,5 @@ add_executable(${CMAKE_PROJECT_NAME} ${MLAudioBenchmarksSources})
 target_link_libraries(${CMAKE_PROJECT_NAME}
 PUBLIC
     MLAudioLib
-    benchmark
+    benchmark::benchmark
 )
