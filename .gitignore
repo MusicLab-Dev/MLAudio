@@ -1,0 +1,8 @@
+.vs
+.vscode
+.o
+.dll
+.lib
+.a
+Release
+Debug
