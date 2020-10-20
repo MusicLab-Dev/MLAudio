@@ -58,7 +58,7 @@ private:
     Automations     _automations { 0u };
 };
 
-#include "Control.hpp"
+#include "Control.ipp"
 
 static_assert(alignof(Audio::Control) == 32, "Control must be aligned to 32 bytes !");
 static_assert(sizeof(Audio::Control) == 32, "Control must take 32 bytes !");
