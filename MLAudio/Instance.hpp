@@ -5,7 +5,7 @@
 
 #pragma once
 
-namespace ML::Audio
+namespace Audio
 {
     class Instance;
 }
@@ -13,7 +13,7 @@ namespace ML::Audio
 /**
  * @brief This class represent the instance of this library
  */
-class ML::Audio::Instance
+class Audio::Instance
 {
 public:
     Instance(void);

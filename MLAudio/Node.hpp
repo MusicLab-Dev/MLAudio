@@ -1,7 +1,6 @@
 /*
- * Project: MusicLab
- * Author: Pierre Veysseyre
- * Description: Node.hpp
+ * @ Author: Pierre Veysseyre
+ * @ Description: Node.hpp
  */
 
 #include <memory>
@@ -13,7 +12,7 @@
 
 #pragma once
 
-namespace ML::Audio
+namespace Audio
 {
     template<typename Type>
     class Node;
@@ -29,147 +28,105 @@ namespace ML::Audio
     using CustomString = std::string;
 }
 
-template<typename Type>
-class ML::Audio::Node
+/** @brief A node contains a plugin, a partition table and an automation table */
+class alignas(64) Audio::Node
 {
 public:
-    Node(Type &&type) = default;
+    /** @brief Default constructor */
+    Node(void) noexcept = default;
+
+    /** @brief Construct a node using an explicit plugin */
+    Node(PluginPtr &&plugin) noexcept { setPlugin(std::move(plugin)); }
+
+    /** @brief Move constructor */
+    Node(Node &&other) noexcept = default;
+
+    /** @brief Move assignment */
+    Node &operator=(Node &&other) noexcept = default;
+
+    /** @brief Get the internal plugin */
+    [[nodiscard]] IPlugin *getPlugin(void) { return _plugin.get(); }
+
+    /** @brief Set the internal plugin */
+    void setPlugin(PluginPtr &&plugin);
 
 
-    /**
-     * @brief Check if the node is muted (not active) or not
-     *
-     * @return true Control is muted
-     * @return false Control isn't muted
-     */
-    bool muted(void) const noexcept { return _muted; }
+    /** @brief Check if the node is muted (not active) or not */
+    [[nodiscard]] bool muted(void) const noexcept { return _muted; }
 
-    /**
-     * @brief Set the muted state of the node
-     *
-     * @param muted New muted state
-     */
-    void setMuted(bool muted) noexcept { _muted = muted; }
+    /** @brief Set the muted state of the node */
+    bool setMuted(const bool muted) noexcept;
 
 
-    /**
-     * @brief Check if the control is dirty or not
-     *
-     * @return true Control is dirty
-     * @return false Control isn't dirty
-     */
-    bool dirty(void) const noexcept { return _dirty; }
+    /** @brief Check if the control is dirty or not */
+    [[nodiscard]] bool dirty(void) const noexcept { return _dirty; }
 
-    /**
-     * @brief Set the dirty state of the control
-     *
-     * @param dirty New dirty state
-     */
-    void setDirty(bool dirty) noexcept { _dirty = muted; }
+    /** @brief Set the dirty state of the control */
+    void setDirty(const bool dirty) noexcept { _dirty = dirty; }
 
 
-    /**
-     * @brief Get the plugin's flags associated to this node
-     *
-     * @return const IPlugin::Flags Plugin's flags
-     */
-    const IPlugin::Flags flags(void) const noexcept { return _flags; }
+    /** @brief Get the plugin's flags associated to this node */
+    [[nodiscard]] const IPlugin::Flags flags(void) const noexcept { return _flags; }
 
 
-    /**
-     * @brief Get the color associated to this node
-     *
-     * @return Color Color value
-     */
-    Color color(void) const noexcept { return _color; }
+    /** @brief Get the color associated to this node */
+    [[nodiscard]] Color color(void) const noexcept { return _color; }
 
-    /**
-     * @brief Set the color
-     *
-     * @param color Color value
-     */
-    void setColor(const Color color) noexcept { _color = color; }
+    /** @brief Set the color */
+    bool setColor(const Color color) noexcept;
 
 
-    /**
-     * @brief Get the name of the node
-     *
-     * @return const CustomString& Constant reference to the node name
-     */
-    const CustomString &name(void) const noexcept { return _name; }
+    /** @brief Get the name of the node */
+    [[nodiscard]] const CustomString &name(void) const noexcept { return _name; }
 
-    /**
-     * @brief Set the node name
-     *
-     * @param name New name
-     * @return true New name correctly set
-     * @return false Cannot set the new name
-     */
-    bool setName(CustomString &&name) noexcept { return false; }
+    /** @brief Set the node name,return trueif the name changed */
+    bool setName(CustomString &&name) noexcept;
 
 
-    // IDevicePtr &device(void) noexcept { return _device; }
-    // const IDevicePtr &device(void) const noexcept { return _device; }
+    /** @brief Get a reference to the node plugin */
+    [[nodiscard]] PluginPtr &plugin(void) noexcept { return _plugin; }
+
+    /** @brief Get a constant reference to the node plugin */
+    [[nodiscard]] const PluginPtr &plugin(void) const noexcept { return _plugin; }
 
 
-    /**
-     * @brief Get the partitions associated to the node
-     *
-     * @return Partitions& Reference to the partitions
-     */
-    // Partitions &partitions(void) noexcept { return _partitions; }
+    /** @brief Get a reference to the node partitions */
+    // [[nodiscard]] Partitions &partitions(void) noexcept { return _partitions; }
 
-    /**
-     * @brief Get the partitions associated to the node
-     *
-     * @return Partitions& Constant reference to the partitions
-     */
-    // const Partitions &partitions(void) const noexcept { return _partitions; }
+    /** @brief Get a constant reference to the node partitions */
+    // [[nodiscard]] const Partitions &partitions(void) const noexcept { return _partitions; }
 
 
-    /**
-     * @brief Get the node childrens
-     *
-     * @return Nodes& Reference to the childrens
-     */
-    Nodes &children(void) noexcept { return _children; }
+    /** @brief Get a reference to the node childrens */
+    [[nodiscard]] Nodes &children(void) noexcept { return _children; }
 
-    /**
-     * @brief Get the node childrens
-     *
-     * @return Nodes& Constant reference to the childrens
-     */
-    const Nodes &children(void) const noexcept { return _children; }
+    /** @brief Get a constant reference to the node childrens */
+    [[nodiscard]] const Nodes &children(void) const noexcept { return _children; }
 
 
-    /**
-     * @brief Get the connections associated to the node
-     *
-     * @return Connections& Reference to the connections
-     */
-    // Connections &connections(void) noexcept { return _connections; }
+    /** @brief Get a reference to the node connections */
+    // [[nodiscard]] Connections &connections(void) noexcept { return _connections; }
 
-    /**
-     * @brief Get the connections associated to the node
-     *
-     * @return Connections& Constant reference to the connections
-     */
-    // const Connections &connections(void) const noexcept { return _connections; }
+    /** @brief Get a constant reference to the node connections */
+    // [[nodiscard]] const Connections &connections(void) const noexcept { return _connections; }
 
 
-    /**
-     * @brief Get the connections associated to the node
-     *
-     * @return Connections& Reference to the connections
-     */
-    // Connections &connections(void) noexcept { return _connections; }
+    /** @brief Get a reference to the node cache */
+    // [[nodiscard]] Buffer &cache(void) noexcept { return _cache; }
 
-    /**
-     * @brief Get the connections associated to the node
-     *
-     * @return Connections& Constant reference to the connections
-     */
-    // const Connections &connections(void) const noexcept { return _connections; }
+    /** @brief Get a constant reference to the node cache */
+    // [[nodiscard]] const Buffer &cache(void) const noexcept { return _cache; }
+
+
+    /** @brief Generate an audio block */
+    void generateAudioBlock(void) const noexcept;
+
+    /** @brief Signal called when the generation of the audio block start */
+    void onAudioGenerationStarted(const BeatRange &range) const noexcept;
+
+    /** @brief Signal called when the generation of the audio block is stopped */
+    void onAudioGenerationStopped(void) const noexcept;
+
 
 private:
     bool            _muted { false };
@@ -185,3 +142,8 @@ private:
     // Buffer          _cache {};
 
 };
+
+#include "Node.ipp"
+
+static_assert(alignof(Audio::Node) == 64, "Node must be aligned to 64 bytes !");
+static_assert(sizeof(Audio::Node) == 64, "Node must take 64 bytes !");

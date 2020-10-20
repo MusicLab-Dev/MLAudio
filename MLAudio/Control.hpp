@@ -1,16 +1,16 @@
 /*
- * Project: MusicLab
- * Author: Pierre Veysseyre
- * Description: Control.hpp
+ * @ Author: Pierre Veysseyre
+ * @ Description: Control.hpp
  */
 
 #pragma once
 
-#include "Automation.hpp"
-
+#include <bitset>
 #include <vector>
 
-namespace ML::Audio
+#include "Automation.hpp"
+
+namespace Audio
 {
     class Control;
 
@@ -18,67 +18,47 @@ namespace ML::Audio
     using Controls = std::vector<Control>;
 };
 
-class ML::Audio::Control
+/** @brief A control describe how to change a plugin parameter live or in time */
+class Audio::Control
 {
 public:
-    Control(void) = default;
+    /** @brief Check if the control is muted (not active) or not */
+    [[nodiscard]] bool muted(void) const noexcept { return _muted; }
 
-
-    /**
-     * @brief Check if the control is muted (not active) or not
-     *
-     * @return true Control is muted
-     * @return false Control isn't muted
-     */
-    bool muted(void) const noexcept { return _muted; }
-
-    /**
-     * @brief Set the muted state of the control
-     *
-     * @param muted New muted state
-     */
+    /** @brief Set the muted state of the control */
     void setMuted(bool muted) noexcept { _muted = muted; }
 
 
-    /**
-     * @brief Get the paramID associated to this control
-     *
-     * @return ParamID ParamID value
-     */
-    ParamID paramID(void) const noexcept { return _paramID; }
+    /** @brief Check if an automation is muted */
+    [[nodiscard]] bool isAutomationMuted(const std::size_t index) const noexcept { return _bitset.test(index); }
 
-    /**
-     * @brief Set a new ParamID to this control
-     *
-     * @param paramID New ParamID value
-     * @return true New paramID set correctly
-     * @return false Invalid paramID, internal paramID hadn't change
-     */
-    bool setParamID(const ParamID paramID) /* noexcept */ { return false; }
+    /** @brief Check if an automation is muted */
+    bool setAutomationMutedState(const std::size_t index, const bool state) noexcept;
 
 
-    /**
-     * @brief Get the list of Point associated to this control
-     *
-     * @return Points& Reference to the points
-     */
-    Points &points(void) noexcept { }
+    /** @brief Get the paramID associated to this control */
+    [[nodiscard]] ParamID paramID(void) const noexcept { return _paramID; }
 
-    /**
-     * @brief Get the list of Point associated to this control
-     *
-     * @return Points& Constant reference to the points
-     */
-    const Points &points(void) const noexcept {}
+    /** @brief Set a new ParamID to this control, returns true if the id changed */
+    bool setParamID(const ParamID paramID) noexcept;
 
+
+    /** @brief Get the list of Point associated to this control */
+    [[nodiscard]] Points &points(void) noexcept { }
+
+    /** @brief Get the list of Point associated to this control */
+    [[nodiscard]] const Points &points(void) const noexcept {}
 
 private:
     Point           _manualPoint {};
     ParamID         _paramID {};
     bool            _manualMode { false };
     bool            _muted { false };
-    char            __padding[2] {};
+    std::bitset<16> _automationMutedStates {};
     Automations     _automations { 0u };
 };
 
-static_assert(sizeof(ML::Audio::Control) == 32, "Control must take 32 bytes !");
+#include "Control.hpp"
+
+static_assert(alignof(Audio::Control) == 32, "Control must be aligned to 32 bytes !");
+static_assert(sizeof(Audio::Control) == 32, "Control must take 32 bytes !");

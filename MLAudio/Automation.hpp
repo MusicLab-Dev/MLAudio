@@ -1,16 +1,15 @@
 /*
- * Project: MusicLab
- * Author: Pierre Veysseyre
- * Description: Automation.hpp
+ * @ Author: Pierre Veysseyre
+ * @ Description: Automation.hpp
  */
 
 #pragma once
 
-#include "Globals.hpp"
-
 #include <vector>
 
-namespace ML::Audio
+#include "Base.hpp"
+
+namespace Audio
 {
     class Automation;
     struct Point;
@@ -21,76 +20,43 @@ namespace ML::Audio
     using Points = std::vector<Point>;
 };
 
-struct ML::Audio::Point {
-    enum class CurveType : char {
+/** @brief Represent a point in an automation curve */
+struct alignas(16) Audio::Point
+{
+    enum class CurveType : std::uint8_t {
         Linear, Fast, Slow
     };
 
-    Beat        beat {};
-    CurveType   type { CurveType::Linear };
-    char        _padding[1] {};
-    int16_t     curveRate {};
-    ParamValue  value {};
+    Beat                    beat {};
+    alignas(2) CurveType    type { CurveType::Linear };
+    std::int16_t            curveRate {}; // We may change this to unsigned 24bits for better precision
+    ParamValue              value {};
 };
 
-class ML::Audio::Automation
+static_assert(alignof(Audio::Point) == 16, "Point must be aligned to 16 bytes !");
+static_assert(sizeof(Audio::Point) == 16, "Point must take 16 bytes !");
+
+
+/** @brief An automation hold a curve used to change parameters over time */
+class alignas(16) Audio::Automation
 {
 public:
-    // Forward definition to either BeatRange or TimeRange (e.g. Software audio architechture)
-    using InstanceType = BeatRange;
+    /** @brief Get a reference to automation points */
+    [[nodiscard]] Points &points(void) noexcept { return _points; }
 
-    /**
-     * @brief Get the automation points
-     *
-     * @return Points& Reference to points
-     */
-    Points &points(void) noexcept { return _points; }
+    /** @brief Get a constant reference to automation points */
+    [[nodiscard]] const Points &points(void) const noexcept { return _points; }
 
-    /**
-     * @brief Get the automation points
-     *
-     * @return Points& Constant reference to points
-     */
-    const Points &points(void) const noexcept { return _points; }
+    /** @brief Get a reference to automation instances */
+    [[nodiscard]] BeatRange &instances(void) noexcept { return _instances; }
 
-
-    /**
-     * @brief Get the automation instances
-     *
-     * @return InstanceType& Reference to instances
-     */
-    InstanceType &instances(void) noexcept { return _instances; }
-
-    /**
-     * @brief Get the automation instances
-     *
-     * @return InstanceType& Reference to instances
-     */
-    const InstanceType &instances(void) const noexcept { return _instances; }
-
-
-    /**
-     * @brief Check if the automation is muted (not active) or not
-     *
-     * @return true Automation is muted
-     * @return false Automation isn't muted
-     */
-    bool muted(void) const noexcept { return _muted; }
-
-    /**
-     * @brief Set the muted state of the automation
-     *
-     * @param muted New muted state
-     */
-    void setMuted(bool muted) noexcept { _muted = muted; }
-
+    /** @brief Get a constant reference to automation instances */
+    [[nodiscard]] const BeatRange &instances(void) const noexcept { return _instances; }
 
 private:
     Points          _points { 0 };
-    InstanceType    _instances {};
-    bool            _muted { false };
-    char            __padding[7] {};
+    BeatRange       _instances {};
 };
 
-static_assert(sizeof(ML::Audio::Point) == 16, "Point must take 16 bytes !");
-static_assert(sizeof(ML::Audio::Automation) == 16, "Automation must take 16 bytes !");
+static_assert(alignof(Audio::Automation) == 16, "Automation must be aligned to 16 bytes !");
+static_assert(sizeof(Audio::Automation) == 16, "Automation must take 16 bytes !");

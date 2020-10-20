@@ -8,12 +8,12 @@
 
 #include "IPlugin.hpp"
 
-namespace ML::Audio
+namespace Audio
 {
     class PluginPtr;
 };
 
-class ML::Audio::PluginPtr
+class Audio::PluginPtr
 {
 public:
     PluginPtr(IPlugin *plugin);

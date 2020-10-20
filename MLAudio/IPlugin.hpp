@@ -6,12 +6,12 @@
 
 #pragma once
 
-namespace ML::Audio
+namespace Audio
 {
     class IPlugin;
 };
 
-class ML::Audio::IPlugin
+class Audio::IPlugin
 {
 public:
     enum class Flags {
