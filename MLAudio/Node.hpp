@@ -5,28 +5,24 @@
 
 #include <memory>
 
-#include "Globals.hpp"
+#include "Base.hpp"
 
 #include "PluginPtr.hpp"
 #include "Control.hpp"
+#include "Partition.hpp"
+#include "Connection.hpp"
 
 #pragma once
 
 namespace Audio
 {
-    template<typename Type>
     class Node;
 
-    template<typename Type>
-    using NodePtr = std::unique_ptr<Node<Type>>;
+    using NodePtr = std::unique_ptr<Node>;
 
     // Replace std::vector by FlatVector ??
-    template<typename Type>
-    using Nodes = std::vector<NodePtr<Type>>;
-
-    // Replace std::string by FlatString
-    using CustomString = std::string;
-}
+    using Nodes = std::vector<NodePtr>;
+};
 
 /** @brief A node contains a plugin, a partition table and an automation table */
 class alignas(64) Audio::Node
@@ -79,7 +75,7 @@ public:
     /** @brief Get the name of the node */
     [[nodiscard]] const CustomString &name(void) const noexcept { return _name; }
 
-    /** @brief Set the node name,return trueif the name changed */
+    /** @brief Set the node name, return true if the name changed */
     bool setName(CustomString &&name) noexcept;
 
 
@@ -91,10 +87,10 @@ public:
 
 
     /** @brief Get a reference to the node partitions */
-    // [[nodiscard]] Partitions &partitions(void) noexcept { return _partitions; }
+    [[nodiscard]] Partitions &partitions(void) noexcept { return _partitions; }
 
     /** @brief Get a constant reference to the node partitions */
-    // [[nodiscard]] const Partitions &partitions(void) const noexcept { return _partitions; }
+    [[nodiscard]] const Partitions &partitions(void) const noexcept { return _partitions; }
 
 
     /** @brief Get a reference to the node childrens */
@@ -105,10 +101,10 @@ public:
 
 
     /** @brief Get a reference to the node connections */
-    // [[nodiscard]] Connections &connections(void) noexcept { return _connections; }
+    [[nodiscard]] Connections &connections(void) noexcept { return _connections; }
 
     /** @brief Get a constant reference to the node connections */
-    // [[nodiscard]] const Connections &connections(void) const noexcept { return _connections; }
+    [[nodiscard]] const Connections &connections(void) const noexcept { return _connections; }
 
 
     /** @brief Get a reference to the node cache */
@@ -136,9 +132,9 @@ private:
     CustomString    _name { "Node" };
     PluginPtr       _plugin { nullptr };
     Controls        _controls { 0u };
-    // Partitions      _partitions { 0u };
-    Nodes<Type>     _children { 0u };
-    // Connections     _connections { 0u };
+    Partitions      _partitions { 0u };
+    Nodes           _children { 0u };
+    Connections     _connections { 0u };
     // Buffer          _cache {};
 
 };

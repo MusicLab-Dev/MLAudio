@@ -4,6 +4,8 @@
  */
 
 #include <cstdint>
+#include <vector>
+#include <string>
 
 namespace Audio
 {
@@ -16,11 +18,19 @@ namespace Audio
     using Velocity = std::uint16_t;
     using ParamID = std::uint32_t;
     using ParamValue = double;
-    using Tuning = float;
+    using Tuning = uint16_t;
     using Channels = std::uint8_t;
 
     struct BeatRange;
     struct TimeRange;
+
+    // Replace std::vector by FlatVector
+    using BeatRanges = std::vector<BeatRange>;
+    // Replace std::vector by FlatVector
+    using TimeRanges = std::vector<TimeRange>;
+
+    // Replace std::string by FlatString
+    using CustomString = std::string;
 };
 
 struct Audio::BeatRange
