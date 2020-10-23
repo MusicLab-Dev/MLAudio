@@ -1,16 +1,15 @@
 /*
  * @ Author: Pierre Veysseyre
- * @ Description: Node.hpp
+ * @ Description: Node
  */
 
 #include <memory>
-
-#include "Base.hpp"
 
 #include "PluginPtr.hpp"
 #include "Control.hpp"
 #include "Partition.hpp"
 #include "Connection.hpp"
+#include "Buffer.hpp"
 
 #pragma once
 
@@ -135,8 +134,7 @@ private:
     Partitions      _partitions { 0u };
     Nodes           _children { 0u };
     Connections     _connections { 0u };
-    // Buffer          _cache {};
-
+    Buffer          _cache { 0u };
 };
 
 #include "Node.ipp"

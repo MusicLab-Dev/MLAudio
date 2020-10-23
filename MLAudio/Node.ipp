@@ -6,7 +6,7 @@
 inline void Audio::Node::setPlugin(PluginPtr &&plugin)
 {
     // reset affected members
-    _plugin = std::move(plugins);
+    _plugin = std::move(plugin);
 }
 
 inline bool Audio::Node::setMuted(const bool muted) noexcept

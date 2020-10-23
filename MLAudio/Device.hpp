@@ -48,6 +48,7 @@ public:
     Device(const std::string_view &name, AudioCallback &&callback);
 
 
+    void init(void);
     void release(void);
     void start(void);
     void stop(void);
@@ -81,7 +82,11 @@ public:
     bool setBlockSize(const std::uint16_t blockSize) noexcept;
 
 
+    static void Release(void);
 
+    static Capabilities::DeviceCapabilities GetDeviceCapabilities(void);
+
+    static DevicePtr Instantiate(const char *name);
 
 private:
     AudioCallback   _callback { nullptr };
@@ -92,3 +97,6 @@ private:
 };
 
 #include "Device.ipp"
+
+// static_assert(alignof(Audio::Device) == 16, "Device must be aligned to 16 bytes !");
+static_assert(sizeof(Audio::Device) == 16, "Device must take 16 bytes !");

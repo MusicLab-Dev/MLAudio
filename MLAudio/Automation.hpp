@@ -5,8 +5,6 @@
 
 #pragma once
 
-#include <vector>
-
 #include "Base.hpp"
 
 namespace Audio
@@ -21,6 +19,7 @@ namespace Audio
 /** @brief Represent a point in an automation curve */
 struct alignas(16) Audio::Point
 {
+    /** @brief Describe the interpolation type between points */
     enum class CurveType : std::uint8_t {
         Linear, Fast, Slow
     };
