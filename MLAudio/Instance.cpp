@@ -5,7 +5,7 @@
 
 #include "Instance.hpp"
 
-using namespace ML::Audio;
+using namespace Audio;
 
 Instance::Instance(void)
 {

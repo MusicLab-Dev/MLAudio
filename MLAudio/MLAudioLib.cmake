@@ -5,6 +5,9 @@ get_filename_component(MLAudioLibDir ${CMAKE_CURRENT_LIST_FILE} PATH)
 set(MLAudioLibSources
     ${MLAudioLibDir}/Instance.hpp
     ${MLAudioLibDir}/Instance.cpp
+    ${MLAudioLibDir}/Device.hpp
+    ${MLAudioLibDir}/Device.cpp
+    ${MLAudioLibDir}/Device.ipp
 )
 
 add_library(${PROJECT_NAME} ${MLAudioLibSources})
