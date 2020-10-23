@@ -5,17 +5,13 @@
 
 #pragma once
 
-#include <cstdint>
-#include <vector>
-
 #include "PluginPtr.hpp"
 
 namespace Audio
 {
     class Connection;
 
-    // Replace std::vector by FlatVector
-    using Connections = std::vector<Connection>;
+    using Connections = FlatVector<Connection>;
 };
 
 class alignas(16) Audio::Connection

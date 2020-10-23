@@ -5,16 +5,13 @@
 
 #pragma once
 
-#include <vector>
-
 #include "Note.hpp"
 
 namespace Audio
 {
     class Partition;
 
-    // Replace std::vector by FlatVector
-    using Partitions = std::vector<Partition>;
+    using Partitions = FlatVector<Partition>;
 };
 
 class Audio::Partition
@@ -24,7 +21,7 @@ public:
     [[nodiscard]] const Notes &notes(void) const noexcept { return _notes; }
 
     /** @brief Get the internal notes count */
-    [[nodiscard]] std::size_t count(void) const noexcept { return _notes.size(); }
+    [[nodiscard]] std::size_t count(void) const noexcept { /* return _notes.size(); */ }
 
 
     void add(const Note &note) noexcept;
@@ -74,12 +71,12 @@ public:
     bool apply(const TimeRange &range, Functor &&functor) noexcept;
 
 private:
-    Notes           _notes {};          // 8 bytes
-    TimeRanges      _instances {};      // 8 bytes
-    CustomString    _name {};           // 8 bytes
-    NoteIndex       _lastID {};         // 2 bytes
-    Channels        _channels {};       // 1 byte
-    bool            _muted { false };   // 1
+    Notes           _notes {};
+    TimeRanges      _instances {};
+    CustomString    _name {};
+    NoteIndex       _lastID {};
+    Channels        _channels {};
+    bool            _muted { false };
 };
 
 #include "Partition.ipp"

@@ -6,7 +6,6 @@
 #pragma once
 
 #include <bitset>
-#include <vector>
 
 #include "Automation.hpp"
 
@@ -14,8 +13,7 @@ namespace Audio
 {
     class Control;
 
-    // Replace std::vector by FlatVector
-    using Controls = std::vector<Control>;
+    using Controls = FlatVector<Control>;
 };
 
 /** @brief A control describe how to change a plugin parameter live or in time */

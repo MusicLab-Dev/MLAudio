@@ -13,8 +13,7 @@ namespace Audio
 {
     struct Note;
 
-    // Replace std::vector by FlatVector
-    using Notes = std::vector<Note>;
+    using Notes = FlatVector<Note>;
 };
 
 struct Audio::Note

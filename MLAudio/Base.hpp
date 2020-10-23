@@ -24,13 +24,16 @@ namespace Audio
     struct BeatRange;
     struct TimeRange;
 
-    // Replace std::vector by FlatVector
-    using BeatRanges = std::vector<BeatRange>;
-    // Replace std::vector by FlatVector
-    using TimeRanges = std::vector<TimeRange>;
+    // Remove those after
+    template<typename T>
+    using FlatVector = T*;
+    using FlatString = FlatVector<char>;
+
+    using BeatRanges = FlatVector<BeatRange>;
+    using TimeRanges = FlatVector<TimeRange>;
 
     // Replace std::string by FlatString
-    using CustomString = std::string;
+    using CustomString = FlatString;
 };
 
 struct Audio::BeatRange

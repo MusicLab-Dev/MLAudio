@@ -14,10 +14,8 @@ namespace Audio
     class Automation;
     struct Point;
 
-    // Replace std::vector by FlatVector
-    using Automations = std::vector<Automation>;
-    // Replace std::vector by SortedFlatVector
-    using Points = std::vector<Point>;
+    using Automations = FlatVector<Automation>;
+    using Points = FlatVector<Point>;
 };
 
 /** @brief Represent a point in an automation curve */

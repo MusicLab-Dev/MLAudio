@@ -9,6 +9,8 @@
 namespace Audio
 {
     class IPlugin;
+
+    // using DLLSignature =
 };
 
 class Audio::IPlugin
