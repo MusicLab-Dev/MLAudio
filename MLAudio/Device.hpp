@@ -15,10 +15,20 @@
 namespace Audio
 {
     class Device;
+    struct Capabilities;
 
     using AudioCallback = SDL_AudioCallback;
 
     using DevicePtr = std::unique_ptr<Device>;
+};
+
+struct Audio::Capabilities
+{
+    using DeviceCapabilities = std::vector<Capabilities>;
+    using NameStr = std::unique_ptr<char *>;
+
+    NameStr     name { nullptr };
+    bool        isInput { true };
 };
 
 class Audio::Device
