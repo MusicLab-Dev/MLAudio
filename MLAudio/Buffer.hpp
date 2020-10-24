@@ -19,7 +19,7 @@ public:
     Buffer(void) = default;
     Buffer(const std::size_t size) : _data(new std::byte[size]), _size(size) {}
 
-    ~Buffer(void) { sizeof(Buffer) if (_data) delete[] _data; }
+    ~Buffer(void) { if (_data) delete[] _data; }
 
     [[nodiscard]] std::size_t size(void) const noexcept { return _size; }
 

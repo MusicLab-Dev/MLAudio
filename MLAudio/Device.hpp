@@ -15,43 +15,48 @@
 namespace Audio
 {
     class Device;
-    struct Capabilities;
 
     // Forward declaration to the SDL audio callback function signature
     using AudioCallback = SDL_AudioCallback;
-
-    using DevicePtr = std::unique_ptr<Device>;
 };
 
-
-/** @brief Capabilities describe the device behaviors */
-struct Audio::Capabilities
-{
-    using DeviceCapabilities = std::vector<Capabilities>;
-    using NameStr = std::unique_ptr<char *>;
-
-    NameStr     name { nullptr };
-    bool        isInput { true };
-};
 
 /** @brief Device represent an SDL audio device, it can be used either for input OR output */
 class Audio::Device
 {
 public:
+
     /** @brief Format describe the bit depth (e.g. Audio headroom) of the Device
      *  Note that the CPU works increase with the size of the format ! */
     enum class Format : std::uint8_t {
         Fixed8, Fixed16, Fixed32, Floating32
     };
 
+    /** @brief Descibes how to use a logical device and is used to retreive one */
+    struct alignas(64) Descriptor
+    {
+        std::string name { nullptr };
+        bool isInput { true };
+    };
 
-    Device(const std::string_view &name, AudioCallback &&callback);
+    /** @brief A list of logical device descriptors used to introspect the hardware device */
+    using Descriptors = std::vector<Descriptor>;
+
+    /** @brief Construct a device using a descirptor */
+    Device(const Descriptor &descriptor, AudioCallback &&callback);
+
+    /** @brief Destroy and release the audio device */
+    ~Device(void);
 
 
-    void init(void);
-    void release(void);
+    /** @brief Register the audio callback */
     void start(void);
+
+    /** @brief Unregister the audio callback */
     void stop(void);
+
+    /** @brief Check if the device is running (and audio callback is registered) */
+    [[nodiscard]] bool running(void) const noexcept;
 
 
     /** @brief Get the actual sample rate */
@@ -82,13 +87,17 @@ public:
     bool setBlockSize(const std::uint16_t blockSize) noexcept;
 
 
-    static void Release(void);
+    /** @brief Initialize the backend audio driver */
+    static void InitDriver(void);
 
-    static Capabilities::DeviceCapabilities GetDeviceCapabilities(void);
+    /** @brief Release the backend audio driver */
+    static void ReleaseDriver(void);
 
-    static DevicePtr Instantiate(const char *name);
+    /** @brief Get all device descriptors */
+    static Descriptors GetDeviceDescriptors(void);
 
 private:
+    // SDL device
     AudioCallback   _callback { nullptr };
     int             _sampleRate { 48000 };
     Format          _format { Format::Floating32 };
@@ -100,3 +109,4 @@ private:
 
 // static_assert(alignof(Audio::Device) == 16, "Device must be aligned to 16 bytes !");
 static_assert(sizeof(Audio::Device) == 16, "Device must take 16 bytes !");
+// The audio device should be aligned to 32

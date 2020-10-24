@@ -32,6 +32,7 @@ public:
         ApplyFunctor    apply { nullptr };
         NotifyFunctor   notify { nullptr };
     };
+
     using Events = FlatVector<Event>;
 
     enum class State : std::uint32_t {
@@ -66,7 +67,7 @@ public:
 
     bool applyEvent(void);
 
-    void notifyEven(void);
+    void notifyEvent(void);
 
 
     bool moveBlockToStream(void);
@@ -75,8 +76,9 @@ public:
 
 
 protected:
-    // template<typename Functor, typename ...Args>
-    // std::future<Functor::ReturnType> postWork(Functor &&functor, Args &&...args) = 0;
+    template<typename Functor, typename ...Args>
+    std::future<decltype(std::declval<Functor>()(std::declval<Args>()...))>
+        postWork(Functor &&functor, Args &&...args) = 0;
 
 
     void onAudioBlockGenerated(void) = 0;
