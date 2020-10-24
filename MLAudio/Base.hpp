@@ -34,6 +34,10 @@ namespace Audio
 
     // Replace std::string by FlatString
     using CustomString = FlatString;
+
+    // Replace by the 'real' RefCount
+    using RefCount = std::uint32_t;
+    using RefCounts = FlatVector<RefCount>;
 };
 
 struct Audio::BeatRange

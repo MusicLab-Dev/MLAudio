@@ -7,7 +7,7 @@
 
 #include <memory>
 
-#include "PluginPtr.hpp"
+#include "IPlugin.hpp"
 
 #include "Base.hpp"
 
@@ -24,7 +24,7 @@ class Audio::IPluginFactory
 {
 public:
     enum class SDK : std::uint32_t {
-        Internal, External, VST2, VST3
+        Internal, External
     };
     enum class Tags : std::uint32_t {
         Effect          = 1,
@@ -56,11 +56,24 @@ public:
     ~IPluginFactory(void) {}
 
     virtual std::string_view getName(void) = 0;
+
     virtual std::string_view getPath(void) = 0;
-    // virtual Flags getFlags(void) = 0;
+
+    virtual IPlugin::Flags getFlags(void) = 0;
+
     virtual Tags getTags(void) = 0;
+
     // virtual Capabilities getCapabilities(void) = 0;
+
     virtual SDK getSDK(void) = 0;
+
     virtual PluginPtr instantiate(void) = 0;
 
+    void f() {
+        sizeof(IPluginFactory);
+    }
+
 };
+
+static_assert(alignof(Audio::IPluginFactory) == 16, "IPluginFactory must be aligned to 16 bytes !");
+static_assert(sizeof(Audio::IPluginFactory) == 16, "IPluginFactory must take 16 bytes !");

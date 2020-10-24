@@ -5,7 +5,7 @@
 
 #include <memory>
 
-#include "PluginPtr.hpp"
+#include "IPlugin.hpp"
 #include "Control.hpp"
 #include "Partition.hpp"
 #include "Connection.hpp"

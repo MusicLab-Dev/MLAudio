@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include "PluginPtr.hpp"
+#include "IPlugin.hpp"
 
 namespace Audio
 {
