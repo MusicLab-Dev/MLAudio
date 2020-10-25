@@ -8,6 +8,8 @@ set(MLAudioLibSources
     ${MLAudioLibDir}/Device.hpp
     ${MLAudioLibDir}/Device.cpp
     ${MLAudioLibDir}/Device.ipp
+    ${MLAudioLibDir}/Control.hpp
+    ${MLAudioLibDir}/Control.ipp
 )
 
 add_library(${PROJECT_NAME} ${MLAudioLibSources})

@@ -16,10 +16,13 @@ namespace Audio
     using Controls = FlatVector<Control>;
 };
 
-/** @brief A control describe how to change a plugin parameter live or in time */
-class Audio::Control
+/** @brief A control describe how to change a plugin parameter over time (both Production & Live).
+ * It contains a set of 16 automations. */
+class alignas(32) Audio::Control
 {
 public:
+    Control(const ParamID paramID) : _paramID(paramID) {}
+
     /** @brief Check if the control is muted (not active) or not */
     [[nodiscard]] bool muted(void) const noexcept { return _muted; }
 
@@ -27,12 +30,16 @@ public:
     void setMuted(bool muted) noexcept { _muted = muted; }
 
 
+    // const std::uint16_t automationMutedState(void) const noexcept { return _automationMutedStates; }
+
     /** @brief Check if an automation is muted */
-    [[nodiscard]] bool isAutomationMuted(const std::size_t index) const noexcept { return _bitset.test(index); }
+    [[nodiscard]] bool isAutomationMuted(const std::size_t index) const noexcept { return (_automationMutedStates & (1u << index)) > 0; }
 
     /** @brief Check if an automation is muted */
     bool setAutomationMutedState(const std::size_t index, const bool state) noexcept;
 
+    /** @brief Check if the automation set if full */
+    [[nodiscard]] bool isAutomationsFull(void) const noexcept;
 
     /** @brief Get the paramID associated to this control */
     [[nodiscard]] ParamID paramID(void) const noexcept { return _paramID; }
@@ -42,17 +49,17 @@ public:
 
 
     /** @brief Get the list of Point associated to this control */
-    [[nodiscard]] Points &points(void) noexcept { }
+    [[nodiscard]] Points &points(void) noexcept;
 
     /** @brief Get the list of Point associated to this control */
-    [[nodiscard]] const Points &points(void) const noexcept {}
+    [[nodiscard]] const Points &points(void) const noexcept;
 
 private:
     Point           _manualPoint {};
     ParamID         _paramID {};
+    std::uint16_t   _automationMutedStates {};
     bool            _manualMode { false };
     bool            _muted { false };
-    std::bitset<16> _automationMutedStates {};
     Automations     _automations { 0u };
 };
 

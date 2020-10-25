@@ -15,21 +15,6 @@ namespace Audio
 
     using DLLSignature = PluginFactoryPtr(*)(void);
 
-    using PluginPtrs = FlatVector<PluginPtr>;
-};
-
-class Audio::PluginPtr
-{
-public:
-    PluginPtr(IPlugin *plugin);
-
-    IPlugin *get(void);
-    const IPlugin *get(void) const;
-
-    void swap(PluginPtr &&plugin);
-
-private:
-    IPlugin *_plugin { nullptr };
 };
 
 class Audio::IPlugin

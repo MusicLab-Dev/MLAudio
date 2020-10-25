@@ -4,6 +4,7 @@ set(MLAudioTestsDir ${MLAudioDir}/Tests)
 
 set(MLAudioTestsSources
     ${MLAudioTestsDir}/tests_Instance.cpp
+    ${MLAudioTestsDir}/tests_Control.cpp
 )
 
 add_executable(${CMAKE_PROJECT_NAME} ${MLAudioTestsSources})

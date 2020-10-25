@@ -34,7 +34,7 @@ static_assert(alignof(Audio::Point) == 16, "Point must be aligned to 16 bytes !"
 static_assert(sizeof(Audio::Point) == 16, "Point must take 16 bytes !");
 
 
-/** @brief An automation hold a curve used to change parameters over time */
+/** @brief An automation hold a curve used to change parameters over time, it may contains multiple instances which describe where the automation appears over time */
 class alignas(16) Audio::Automation
 {
 public:
@@ -45,14 +45,14 @@ public:
     [[nodiscard]] const Points &points(void) const noexcept { return _points; }
 
     /** @brief Get a reference to automation instances */
-    [[nodiscard]] BeatRange &instances(void) noexcept { return _instances; }
+    [[nodiscard]] BeatRanges &instances(void) noexcept { return _instances; }
 
     /** @brief Get a constant reference to automation instances */
-    [[nodiscard]] const BeatRange &instances(void) const noexcept { return _instances; }
+    [[nodiscard]] const BeatRanges &instances(void) const noexcept { return _instances; }
 
 private:
-    Points          _points { 0 };
-    BeatRange       _instances {};
+    Points          _points { 0u };
+    BeatRanges      _instances { 0u };
 };
 
 static_assert(alignof(Audio::Automation) == 16, "Automation must be aligned to 16 bytes !");

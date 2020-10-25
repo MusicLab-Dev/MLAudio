@@ -7,7 +7,7 @@
 
 using namespace Audio;
 
-Device::Device(const std::string_view &name, AudioCallback &&callback)
+Device::Device(const Descriptor &descriptor, AudioCallback &&callback)
 {
 
 }

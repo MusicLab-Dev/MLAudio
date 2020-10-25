@@ -5,9 +5,12 @@
 
 inline bool Audio::Control::setAutomationMutedState(const std::size_t index, const bool state) noexcept
 {
-    if (_automationMutedStates.test(index) == state)
+    if (isAutomationMuted(index) == state)
         return false;
-    _automationMutedStates.set(index, state);
+    if (state)
+        _automationMutedStates |= 1u << index;
+    else
+        _automationMutedStates &= ~(1u << index);
     return true;
 }
 
