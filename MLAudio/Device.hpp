@@ -22,7 +22,7 @@ namespace Audio
 
 
 /** @brief Device represent an SDL audio device, it can be used either for input OR output */
-class Audio::Device
+class alignas(32) Audio::Device
 {
 public:
 
@@ -36,13 +36,13 @@ public:
     struct alignas(64) Descriptor
     {
         std::string name { nullptr };
-        bool isInput { true };
+        bool        isInput { true };
     };
 
     /** @brief A list of logical device descriptors used to introspect the hardware device */
     using Descriptors = std::vector<Descriptor>;
 
-    /** @brief Construct a device using a descirptor */
+    /** @brief Construct a device using a descriptor */
     Device(const Descriptor &descriptor, AudioCallback &&callback);
 
     /** @brief Destroy and release the audio device */
@@ -74,10 +74,10 @@ public:
 
 
     /** @brief Get the actual channels */
-    [[nodiscard]] Channels channels(void) const noexcept { return _channels; }
+    [[nodiscard]] Channel channels(void) const noexcept { return _channels; }
 
     /** @brief Set the channels, return true if the value changed */
-    bool setChannels(const Channels channels) noexcept;
+    bool setChannel(const Channel channels) noexcept;
 
 
     /** @brief Get the actual audio block size */
@@ -97,16 +97,16 @@ public:
     static Descriptors GetDeviceDescriptors(void);
 
 private:
-    // SDL device
-    AudioCallback   _callback { nullptr };
-    int             _sampleRate { 48000 };
-    Format          _format { Format::Floating32 };
-    Channels        _channels { 2u };
-    std::uint16_t   _blockSize { 2084u };
+    SDL_AudioDeviceID   _deviceID { 0u };
+    AudioCallback       _callback { nullptr };
+    int                 _sampleRate { 48000 };
+    Format              _format { Format::Floating32 };
+    Channel            _channels { 2u };
+    std::uint16_t       _blockSize { 2084u };
 };
 
 #include "Device.ipp"
 
-// static_assert(alignof(Audio::Device) == 16, "Device must be aligned to 16 bytes !");
-static_assert(sizeof(Audio::Device) == 16, "Device must take 16 bytes !");
 // The audio device should be aligned to 32
+static_assert(alignof(Audio::Device) == 32, "Device must be aligned to 32 bytes !");
+// static_assert(sizeof(Audio::Device) == 24, "Device must take 24 bytes !");

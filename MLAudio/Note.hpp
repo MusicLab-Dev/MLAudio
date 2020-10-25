@@ -26,7 +26,7 @@ struct Audio::Note
     EventType   type {};
     Key         key {};
     Velocity    velocity {};
-    Tuning      tunning { 0.f };
+    Tuning      tunning { 0u };
     NoteIndex   noteIndex {};
 };
 

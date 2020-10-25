@@ -11,11 +11,11 @@ inline bool Audio::Partition::setMuted(const bool muted) noexcept
     return true;
 }
 
-inline bool Audio::Partition::setChannels(const channels channels) noexcept
+inline bool Audio::Partition::setChannel(const Channel channel) noexcept
 {
-    if (channels == _channels)
+    if (channel == _channel)
         return false;
-    _channels = channels;
+    _channel = channel;
     return true;
 }
 

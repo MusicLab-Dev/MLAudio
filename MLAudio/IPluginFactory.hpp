@@ -7,7 +7,7 @@
 
 #include <memory>
 
-#include "IPlugin.hpp"
+#include "PluginPtr.hpp"
 
 #include "Base.hpp"
 
@@ -46,7 +46,6 @@ public:
         Network         = 1 << 16,
         Drum            = 1 << 17,
         Instrument      = 1 << 18,
-        Drum            = 1 << 19,
         Piano           = 1 << 20,
         Sampler         = 1 << 21,
         Synth           = 1 << 22,

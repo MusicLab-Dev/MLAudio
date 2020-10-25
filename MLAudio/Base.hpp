@@ -3,6 +3,8 @@
  * @ Description: A collection of Audio library builtins
  */
 
+#pragma once
+
 #include <cstdint>
 #include <vector>
 #include <string>
@@ -19,10 +21,19 @@ namespace Audio
     using ParamID = std::uint32_t;
     using ParamValue = double;
     using Tuning = uint16_t;
-    using Channels = std::uint8_t;
+    using Channel = std::uint8_t;
 
-    struct BeatRange;
-    struct TimeRange;
+    struct BeatRange
+    {
+        Beat from {};
+        Beat to {};
+    };
+
+    struct TimeRange
+    {
+        TimeIndex from {};
+        TimeIndex to {};
+    };
 
     // Remove those after
     template<typename T>
@@ -38,18 +49,6 @@ namespace Audio
     // Replace by the 'real' RefCount
     using RefCount = std::uint32_t;
     using RefCounts = FlatVector<RefCount>;
-};
-
-struct Audio::BeatRange
-{
-    Beat from {};
-    Beat to {};
-};
-
-struct Audio::TimeRange
-{
-    TimeIndex from {};
-    TimeIndex to {};
 };
 
 static_assert(sizeof(Audio::BeatRange) == 8, "BeatRange must take 8 bytes !");

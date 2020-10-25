@@ -11,7 +11,7 @@ namespace Audio
 {
     class PluginPtr;
 
-    using PluginPtrs = FlatVector<PluginPtr>;
+    using PluginPtrs = PluginPtr *;
 };
 
 class Audio::PluginPtr

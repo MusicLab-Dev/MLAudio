@@ -15,6 +15,17 @@ namespace Audio
 class Audio::PluginTable
 {
 public:
+    class Instance
+    {
+    public:
+        Instance(void);
+        ~Instance(void);
+
+        PluginTable *get(void) noexcept { return _pluginTable.get(); }
+    private:
+        std::unique_ptr<PluginTable>    _pluginTable { nullptr };
+    };
+
     // PluginTable(const PluginTable &) = delete;
     // PluginTable(PluginTable &&) = delete;
     // PluginTable &operator=(const PluginTable &) = delete;
@@ -25,9 +36,9 @@ public:
     // static void Set(PluginTable *pluginTable) noexcept { if (pluginTable) _Instance = pluginTable; }
 
 
-    // IPluginFactory &record(const std::string &path);
-    // template<typename Type, CustomString Name, IPluginFactory::Tags Tags>
-    // IDeviceFactory &record(void);
+    IPluginFactory &record(const std::string &path);
+    template<typename Type, CustomString Name, IPluginFactory::Tags Tags>
+    IPluginFactory &record(void);
 
 
     /** @brief Get a reference of the plugin factories associated to the table */
@@ -41,7 +52,7 @@ private:
     PluginPtrs          _instances { 0u };
     RefCounts           _counters { 0u };
 
-    static PluginTable *_Instance;
+    // static Instance     _Instance { nullptr };
 
     void f() {
         auto a = sizeof(_factories);
@@ -53,9 +64,9 @@ private:
     }
 
 
-    void addDevice(PluginPtr device);
-    void incrementRefCount(PluginPtr device);
-    void decrementRefCount(PluginPtr device);
+    void addPlugin(PluginPtr plugin);
+    void incrementRefCount(PluginPtr plugin);
+    void decrementRefCount(PluginPtr plugin);
 };
 
 static_assert(alignof(Audio::PluginTable) == 32, "PluginTable must be aligned to 32 bytes !");

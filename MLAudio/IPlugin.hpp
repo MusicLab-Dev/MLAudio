@@ -6,21 +6,24 @@
 
 #pragma once
 
-#include "IPluginFactory.hpp"
+#include "Base.hpp"
+#include "Buffer.hpp"
+#include "Control.hpp"
+#include "Note.hpp"
 
 namespace Audio
 {
     class IPlugin;
-    class PluginPtr;
+
+    class PluginFactoryPtr;
 
     using DLLSignature = PluginFactoryPtr(*)(void);
-
 };
 
 class Audio::IPlugin
 {
 public:
-    enum class Flags {
+    enum class Flags : std::uint16_t {
         AudioInput      = 1,
         AudioOutput     = 1 << 1,
         NoteInput       = 1 << 2,

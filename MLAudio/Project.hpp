@@ -5,6 +5,8 @@
 
 #pragma once
 
+#include <memory>
+
 #include "FlatNode.hpp"
 
 namespace Audio
@@ -16,7 +18,7 @@ namespace Audio
     using ProjectNameStr = std::unique_ptr<char *>;
 };
 
-class Audio::Project
+class alignas(32) Audio::Project
 {
 public:
     /** @brief PlaybackMode describe project purpose
@@ -55,5 +57,5 @@ private:
     void computeFlatTree(void);
 };
 
-// static_assert(alignof(Audio::Project) == 32, "Project must be aligned to 32 bytes !");
+static_assert(alignof(Audio::Project) == 32, "Project must be aligned to 32 bytes !");
 static_assert(sizeof(Audio::Project) == 32, "Project must take 32 bytes !");

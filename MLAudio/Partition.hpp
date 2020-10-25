@@ -21,14 +21,23 @@ public:
     [[nodiscard]] const Notes &notes(void) const noexcept { return _notes; }
 
     /** @brief Get the internal notes count */
-    [[nodiscard]] std::size_t count(void) const noexcept { /* return _notes.size(); */ }
+    [[nodiscard]] std::size_t count(void) const noexcept;
 
 
+    /** @brief Add a single note to the partition */
     void add(const Note &note) noexcept;
+
+    /** @brief Add multiple notes to the partition */
     void add(const Notes &notes) noexcept;
 
+    /** @brief Replace actual notes by another ones to the partition */
+    void replace(const Notes &notes) noexcept;
 
+
+    /** @brief Get the internal notes count */
     bool remove(const size_t index) noexcept;
+
+    /** @brief Get the internal notes count */
     bool remove(const TimeRange &range) noexcept;
 
 
@@ -53,11 +62,11 @@ public:
     bool setMuted(const bool muted) noexcept;
 
 
-    /** @brief Get the internal channels */
-    [[nodiscard]] Channels channels(void) const noexcept { return _channels; }
+    /** @brief Get the internal channel */
+    [[nodiscard]] Channel channel(void) const noexcept { return _channel; }
 
     /** @brief Set the internal channels */
-    bool setChannel(const Channels channel) noexcept;
+    bool setChannel(const Channel channel) noexcept;
 
 
     /** @brief Get the name of the partition */
@@ -75,7 +84,7 @@ private:
     TimeRanges      _instances {};
     CustomString    _name {};
     NoteIndex       _lastID {};
-    Channels        _channels {};
+    Channel         _channel {};
     bool            _muted { false };
 };
 

@@ -3,9 +3,11 @@
  * @ Description: Node
  */
 
+#pragma once
+
 #include <memory>
 
-#include "IPlugin.hpp"
+#include "PluginPtr.hpp"
 #include "Control.hpp"
 #include "Partition.hpp"
 #include "Connection.hpp"
