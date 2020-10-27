@@ -30,7 +30,8 @@ public:
     void setMuted(bool muted) noexcept { _muted = muted; }
 
 
-    // const std::uint16_t automationMutedState(void) const noexcept { return _automationMutedStates; }
+    /** @brief Get the the whole automation muted states */
+    [[nodiscard]] std::uint16_t automationMutedState(void) const noexcept { return _automationMutedStates; }
 
     /** @brief Check if an automation is muted */
     [[nodiscard]] bool isAutomationMuted(const std::size_t index) const noexcept { return (_automationMutedStates & (1u << index)) > 0; }

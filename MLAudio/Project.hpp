@@ -7,8 +7,6 @@
 
 #include <memory>
 
-#include "../DSP/Biquad.hpp"
-
 #include "FlatNode.hpp"
 
 namespace Audio
