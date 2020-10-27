@@ -74,10 +74,10 @@ public:
 
 
     /** @brief Get the actual channels */
-    [[nodiscard]] Channel channels(void) const noexcept { return _channels; }
+    [[nodiscard]] Channels channels(void) const noexcept { return _channels; }
 
     /** @brief Set the channels, return true if the value changed */
-    bool setChannel(const Channel channels) noexcept;
+    bool setChannels(const Channels channels) noexcept;
 
 
     /** @brief Get the actual audio block size */
@@ -101,7 +101,7 @@ private:
     AudioCallback       _callback { nullptr };
     int                 _sampleRate { 48000 };
     Format              _format { Format::Floating32 };
-    Channel            _channels { 2u };
+    Channels            _channels { 2u };
     std::uint16_t       _blockSize { 2084u };
 };
 

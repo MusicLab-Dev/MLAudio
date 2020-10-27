@@ -3,7 +3,7 @@ project(MLAudioTests)
 set(MLAudioTestsDir ${MLAudioDir}/Tests)
 
 set(MLAudioTestsSources
-    ${MLAudioTestsDir}/tests_Instance.cpp
+    ${MLAudioTestsDir}/tests_Device.cpp
     ${MLAudioTestsDir}/tests_Control.cpp
 )
 

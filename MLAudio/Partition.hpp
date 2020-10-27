@@ -49,7 +49,7 @@ public:
 
 
     /** @brief Get the internal intances */
-    [[nodiscard]] TimeRanges & instances(void) noexcept { return _instances; }
+    [[nodiscard]] TimeRanges &instances(void) noexcept { return _instances; }
 
     /** @brief Set the internal intances */
     [[nodiscard]] const TimeRanges &instances(void) const noexcept { return _instances; }
@@ -62,11 +62,11 @@ public:
     bool setMuted(const bool muted) noexcept;
 
 
-    /** @brief Get the internal channel */
-    [[nodiscard]] Channel channel(void) const noexcept { return _channel; }
+    /** @brief Get the internal channels */
+    [[nodiscard]] Channels channels(void) const noexcept { return _channel; }
 
     /** @brief Set the internal channels */
-    bool setChannel(const Channel channel) noexcept;
+    bool setChannels(const Channels channels) noexcept;
 
 
     /** @brief Get the name of the partition */
@@ -84,10 +84,10 @@ private:
     TimeRanges      _instances {};
     CustomString    _name {};
     NoteIndex       _lastID {};
-    Channel         _channel {};
+    Channels         _channel {};
     bool            _muted { false };
 };
 
 #include "Partition.ipp"
 
-static_assert(sizeof(Audio::Partition) == 32, "Partition must take 8 bytes !");
+static_assert(sizeof(Audio::Partition) == 32, "Partition must take 32 bytes !");

@@ -21,7 +21,7 @@ namespace Audio
     using ParamID = std::uint32_t;
     using ParamValue = double;
     using Tuning = uint16_t;
-    using Channel = std::uint8_t;
+    using Channels = std::uint8_t;
 
     struct BeatRange
     {

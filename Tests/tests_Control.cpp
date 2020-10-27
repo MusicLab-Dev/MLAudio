@@ -21,5 +21,6 @@ TEST(Control, AutomationMutedState)
     EXPECT_EQ(control.isAutomationMuted(1), true);
     EXPECT_EQ(control.isAutomationMuted(3), true);
 
-    EXPECT_EQ(control.setAutomationMutedState(1, false), false);
+    EXPECT_EQ(control.setAutomationMutedState(1, true), false);
+    EXPECT_EQ(control.setAutomationMutedState(1, false), true);
 }

@@ -36,4 +36,5 @@ target_include_directories(${PROJECT_NAME} PUBLIC ${MLAudioDir})
 target_link_libraries(${PROJECT_NAME}
 PUBLIC
     MLCoreLib
+    DSPLib
 )

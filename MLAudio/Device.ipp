@@ -19,7 +19,7 @@ inline bool Audio::Device::setFormat(const Device::Format format) noexcept
     return true;
 }
 
-inline bool Audio::Device::setChannel(const Channel channels) noexcept
+inline bool Audio::Device::setChannels(const Channels channels) noexcept
 {
     if (channels == _channels)
         return false;
