@@ -18,6 +18,7 @@ set(MLAudioLibSources
     ${MLAudioLibDir}/InternalFactory.hpp
     ${MLAudioLibDir}/IPlugin.hpp
     ${MLAudioLibDir}/IPluginFactory.hpp
+    ${MLAudioLibDir}/PluginFactoryPtr.hpp
     ${MLAudioLibDir}/Node.hpp
     ${MLAudioLibDir}/Node.ipp
     ${MLAudioLibDir}/Note.hpp
@@ -25,6 +26,7 @@ set(MLAudioLibSources
     ${MLAudioLibDir}/Partition.ipp
     ${MLAudioLibDir}/PluginPtr.hpp
     ${MLAudioLibDir}/PluginTable.hpp
+    ${MLAudioLibDir}/PluginTable.cpp
     ${MLAudioLibDir}/Project.hpp
     ${MLAudioLibDir}/Project.cpp
     ${MLAudioLibDir}/Biquad.hpp

@@ -1,5 +1,5 @@
 /**
- * @ Author: Matthieu Moinvaziri
+ * @ Author: Pierre Veysseyre
  * @ Description: Unit tests of Instance class
  */
 

@@ -10,12 +10,11 @@
 #include "Buffer.hpp"
 #include "Control.hpp"
 #include "Note.hpp"
+#include "PluginFactoryPtr.hpp"
 
 namespace Audio
 {
     class IPlugin;
-
-    class PluginFactoryPtr;
 
     using DLLSignature = PluginFactoryPtr(*)(void);
 };

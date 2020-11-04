@@ -5,20 +5,10 @@
 
 #pragma once
 
-#include <memory>
-
+#include "PluginFactoryPtr.hpp"
+#include "IPlugin.hpp"
 #include "PluginPtr.hpp"
 
-#include "Base.hpp"
-
-namespace Audio
-{
-    class IPluginFactory;
-
-    using PluginFactoryPtr = std::unique_ptr<IPluginFactory>;
-
-    using PluginFactories = FlatVector<PluginFactoryPtr>;
-};
 
 class Audio::IPluginFactory
 {
@@ -74,5 +64,5 @@ public:
 
 };
 
-static_assert(alignof(Audio::IPluginFactory) == 16, "IPluginFactory must be aligned to 16 bytes !");
-static_assert(sizeof(Audio::IPluginFactory) == 16, "IPluginFactory must take 16 bytes !");
+// static_assert(alignof(Audio::IPluginFactory) == 16, "IPluginFactory must be aligned to 16 bytes !");
+// static_assert(sizeof(Audio::IPluginFactory) == 16, "IPluginFactory must take 16 bytes !");
