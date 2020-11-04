@@ -6,8 +6,9 @@
 #pragma once
 
 #include <cstdint>
-#include <vector>
-#include <string>
+
+#include <MLCore/Vector.hpp>
+#include <MLCore/FlatVector.hpp>
 
 namespace Audio
 {
@@ -35,20 +36,8 @@ namespace Audio
         TimeIndex to {};
     };
 
-    // Remove those after
-    template<typename T>
-    using FlatVector = T*;
-    using FlatString = FlatVector<char>;
-
     using BeatRanges = FlatVector<BeatRange>;
     using TimeRanges = FlatVector<TimeRange>;
-
-    // Replace std::string by FlatString
-    using CustomString = FlatString;
-
-    // Replace by the 'real' RefCount
-    using RefCount = std::uint32_t;
-    using RefCounts = FlatVector<RefCount>;
 };
 
 static_assert(sizeof(Audio::BeatRange) == 8, "BeatRange must take 8 bytes !");

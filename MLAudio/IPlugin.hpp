@@ -6,17 +6,14 @@
 
 #pragma once
 
-#include "Base.hpp"
 #include "Buffer.hpp"
 #include "Control.hpp"
 #include "Note.hpp"
-#include "PluginFactoryPtr.hpp"
+#include "IPluginFactory.hpp"
 
 namespace Audio
 {
     class IPlugin;
-
-    using DLLSignature = PluginFactoryPtr(*)(void);
 };
 
 class Audio::IPlugin
@@ -63,5 +60,4 @@ public:
     virtual void onAudioGenerationStarted(const TimeRange &range) = 0;
     virtual void onAudioGenerationStopped(void) = 0;
     virtual void onAudioBlockGenerated(void) = 0;
-
 };

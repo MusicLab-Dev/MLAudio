@@ -5,10 +5,19 @@
 
 #pragma once
 
-#include "PluginFactoryPtr.hpp"
-#include "IPlugin.hpp"
-#include "PluginPtr.hpp"
+#include <memory>
 
+#include "Base.hpp"
+
+namespace Audio
+{
+    class IPlugin;
+    class IPluginFactory;
+
+    using PluginFactoryPtr = std::unique_ptr<IPluginFactory>;
+
+    using DLLSignature = PluginFactory *(*)(void);
+};
 
 class Audio::IPluginFactory
 {
@@ -16,6 +25,7 @@ public:
     enum class SDK : std::uint32_t {
         Internal, External
     };
+
     enum class Tags : std::uint32_t {
         Effect          = 1,
         Analyzer        = 1 << 1,
@@ -56,12 +66,8 @@ public:
 
     virtual SDK getSDK(void) = 0;
 
-    virtual PluginPtr instantiate(void) = 0;
-
-    void f() {
-        sizeof(IPluginFactory);
-    }
-
+    /** @brief Instantiate a new plugin */
+    virtual IPlugin *instantiate(void) = 0;
 };
 
 // static_assert(alignof(Audio::IPluginFactory) == 16, "IPluginFactory must be aligned to 16 bytes !");

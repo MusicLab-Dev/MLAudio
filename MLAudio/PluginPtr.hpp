@@ -1,6 +1,6 @@
 /**
  * @ Author: Pierre Veysseyre
- * @ Description: PluginPtr.hpp
+ * @ Description: PluginPtr
  */
 
 #pragma once
@@ -10,19 +10,35 @@
 namespace Audio
 {
     class PluginPtr;
-
-    using PluginPtrs = FlatVector<PluginPtr>;
 };
 
+/** @brief Store IPlugin shared ownership */
 class Audio::PluginPtr
 {
 public:
-    PluginPtr(IPlugin *plugin);
+    /** @brief Acquire a new plugin, register it and increment ref count */
+    PluginPtr(IPlugin * const plugin) noexcept;
 
-    IPlugin *get(void);
-    const IPlugin *get(void) const;
+    /** @brief Acquire an existing plugin and increment ref count */
+    PluginPtr(const PluginPtr &other) noexcept;
 
-    void swap(PluginPtr &&plugin);
+    /** @brief Move constructor */
+    PluginPtr(PluginPtr &&other) noexcept { swap(other); }
+
+    /** @brief Decrement ref count */
+    ~PluginPtr(void) noexcept;
+
+    /** @brief Swap two instances */
+    void swap(PluginPtr &&plugin) noexcept { std::swap(_plugin, other._plugin); }
+
+
+    /** @brief Dereference plugin pointer */
+    [[nodiscard]] IPlugin *operator->(void) noexcept { return _plugin; }
+    [[nodiscard]] const IPlugin *operator->(void) const noexcept { return _plugin; }
+
+    /** @brief Get the plugin pointer */
+    [[nodiscard]] IPlugin *get(void) noexcept { return _plugin; }
+    [[nodiscard]] const IPlugin *get(void) const noexcept { return _plugin; }
 
 private:
     IPlugin *_plugin { nullptr };

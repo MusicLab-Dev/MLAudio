@@ -5,51 +5,72 @@
 
 #pragma once
 
-#include "IPluginFactory.hpp"
 #include "PluginPtr.hpp"
 
 namespace Audio
 {
     class PluginTable;
+
+    /** @brief Vector of plugin factories */
+    using PluginFactories = TinyVector<PluginFactoryPtr>;
+
+    /** @brief Vector of plugin pointers */
+    using Plugins = Core::TinyVector<IPlugin *>;
+
+    /** @brief Vector of reference counters */
+    using RefCounts = Core::TinyVector<std::uint32_t>;
 };
 
-class alignas(32) Audio::PluginTable
+class alignas(64) Audio::PluginTable
 {
 public:
+    /** @brief Return the default plugin table instance */
+    [[nodiscard]] static PluginTable &Get(void) noexcept { return _Instance; }
 
-    // PluginTable(const PluginTable &) = delete;
-    // PluginTable(PluginTable &&) = delete;
-    // PluginTable &operator=(const PluginTable &) = delete;
-    // PluginTable &operator=(PluginTable &&) = delete;
 
-    static PluginTable *Get(void) noexcept;
+    /** @brief Register a factory using a path */
+    IPluginFactory &registerFactory(const std::string &path);
 
-    static void Set(PluginTable *pluginTable) noexcept;
-
-    IPluginFactory &record(const std::string &path);
+    /** @brief Register a factory using a compiled plugin */
     template<typename Type, CustomString Name, IPluginFactory::Tags Tags>
-    IPluginFactory &record(void);
+    IPluginFactory &registerFactory(void);
+
+
+    /** @brief Instantiates a new plugin using its factory name */
+    [[nodiscard]] PluginPtr instantiate(const std::string_view &view) noexcept;
+
+    /** @brief Instantiates a new plugin using its factory */
+    [[nodiscard]] PluginPtr instantiate(IPluginFactory &factory) noexcept { return PluginPtr(factory.instantiate()); }
 
 
     /** @brief Get a reference of the plugin factories associated to the table */
-    PluginFactories &factories(void) noexcept { return _factories; }
+    [[nodiscard]] PluginFactories &factories(void) noexcept { return _factories; }
 
     /** @brief Get a constant reference to the plugin factories associated to the table */
-    const PluginFactories &factories(void) const noexcept { return _factories; }
+    [[nodiscard]] const PluginFactories &factories(void) const noexcept { return _factories; }
+
+
+public: // Functions reserved to internal usage
+    /** @brief Register a plugin into the table and icrement its ref count */
+    void addPlugin(IPlugin *plugin) noexcept_ndebug;
+
+    /** @brief Increment reference count of a plugin */
+    void incrementRefCount(IPlugin *plugin) noexcept_ndebug;
+
+    /** @brief Decrement reference count of a plugin */
+    void decrementRefCount(IPlugin *plugin) noexcept_ndebug;
 
 private:
-    static PluginTable *_Instance ;
+    static inline PluginTable _Instance {};
 
-    PluginFactories     _factories { 0u };
-    PluginPtrs          _instances { 0u };
-    RefCounts           _counters { 0u };
+    PluginFactories     _factories {};
+    Plugins             _instances {};
+    RefCounts           _counters {};
 
-    PluginTable() {}
-
-    void addPlugin(PluginPtr plugin);
-    void incrementRefCount(PluginPtr plugin);
-    void decrementRefCount(PluginPtr plugin);
+    PluginTable(void) noexcept = default;
 };
 
-static_assert(alignof(Audio::PluginTable) == 32, "PluginTable must be aligned to 32 bytes !");
-static_assert(sizeof(Audio::PluginTable) == 32, "PluginTable must take 32 bytes !");
+static_assert(alignof(Audio::PluginTable) == 64, "PluginTable must be aligned to 64 bytes !");
+static_assert(sizeof(Audio::PluginTable) == 64, "PluginTable must take 64 bytes !");
+
+#include "PluginPtr.ipp"
