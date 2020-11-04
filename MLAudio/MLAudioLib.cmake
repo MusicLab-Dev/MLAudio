@@ -27,6 +27,8 @@ set(MLAudioLibSources
     ${MLAudioLibDir}/PluginTable.hpp
     ${MLAudioLibDir}/Project.hpp
     ${MLAudioLibDir}/Project.cpp
+    ${MLAudioLibDir}/Biquad.hpp
+    ${MLAudioLibDir}/Biquad.cpp
 )
 
 add_library(${PROJECT_NAME} ${MLAudioLibSources})
@@ -36,5 +38,4 @@ target_include_directories(${PROJECT_NAME} PUBLIC ${MLAudioDir})
 target_link_libraries(${PROJECT_NAME}
 PUBLIC
     MLCoreLib
-    DSPLib
 )
