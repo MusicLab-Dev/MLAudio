@@ -35,8 +35,12 @@ public:
     /** @brief Descibes how to use a logical device and is used to retreive one */
     struct alignas(64) Descriptor
     {
-        std::string name { nullptr };
-        bool        isInput { true };
+        std::string     name { nullptr };
+        bool            isInput { true };
+        int             sampleRate { 48000 };
+        Format          format { Format::Floating32 };
+        Channels        channels { 2u };
+        std::uint16_t   blockSize { 2048u };
     };
 
     /** @brief A list of logical device descriptors used to introspect the hardware device */
@@ -50,13 +54,13 @@ public:
 
 
     /** @brief Register the audio callback */
-    void start(void);
+    void start(void) { SDL_PauseAudioDevice(_deviceID, false); }
 
     /** @brief Unregister the audio callback */
-    void stop(void);
+    void stop(void) { SDL_PauseAudioDevice(_deviceID, true); }
 
     /** @brief Check if the device is running (and audio callback is registered) */
-    [[nodiscard]] bool running(void) const noexcept;
+    [[nodiscard]] bool running(void) const noexcept { return (SDL_GetAudioDeviceStatus(_deviceID) == SDL_AUDIO_PLAYING); }
 
 
     /** @brief Get the actual sample rate */
@@ -88,10 +92,10 @@ public:
 
 
     /** @brief Initialize the backend audio driver */
-    static void InitDriver(void);
+    static void InitDriver(void) { SDL_Init(SDL_INIT_AUDIO); }
 
     /** @brief Release the backend audio driver */
-    static void ReleaseDriver(void);
+    static void ReleaseDriver(void) { SDL_Quit(); }
 
     /** @brief Get all device descriptors */
     static Descriptors GetDeviceDescriptors(void);
