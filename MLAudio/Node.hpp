@@ -7,7 +7,7 @@
 
 #include <memory>
 
-#include "PluginPtr.hpp"
+#include "PluginTable.hpp"
 #include "Control.hpp"
 #include "Partition.hpp"
 #include "Connection.hpp"
@@ -74,10 +74,10 @@ public:
 
 
     /** @brief Get the name of the node */
-    [[nodiscard]] const CustomString &name(void) const noexcept { return _name; }
+    [[nodiscard]] const Core::FlatString &name(void) const noexcept { return _name; }
 
     /** @brief Set the node name, return true if the name changed */
-    bool setName(CustomString &&name) noexcept;
+    bool setName(Core::FlatString &&name) noexcept;
 
 
     /** @brief Get a reference to the node plugin */
@@ -126,17 +126,17 @@ public:
 
 
 private:
-    bool            _muted { false };
-    bool            _dirty { false };
-    IPlugin::Flags  _flags { /* IPlugin::Flags::AudioOutput */ };
-    Color           _color { 0u };
-    CustomString    _name { "Node" };
-    PluginPtr       _plugin { nullptr };
-    Controls        _controls { 0u };
-    Partitions      _partitions { 0u };
-    Nodes           _children { 0u };
-    Connections     _connections { 0u };
-    Buffer          _cache { 0u };
+    bool                _muted { false };
+    bool                _dirty { false };
+    IPlugin::Flags      _flags { /* IPlugin::Flags::AudioOutput */ };
+    Color               _color { 0u };
+    Core::FlatString    _name {};
+    PluginPtr           _plugin { nullptr };
+    Controls            _controls {};
+    Partitions          _partitions {};
+    Nodes               _children {};
+    Connections         _connections {};
+    Buffer              _cache {};
 };
 
 #include "Node.ipp"

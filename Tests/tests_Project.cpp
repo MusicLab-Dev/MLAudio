@@ -11,8 +11,5 @@ using namespace Audio;
 
 TEST(Project, Instantiation)
 {
-    char *cName = "test";
-    auto name = std::make_unique<char *>(cName);
-    auto project = Project(std::move(name), Project::PlaybackMode::Production);
-
+    auto project = Project(Core::FlatString("test-project"), Project::PlaybackMode::Production);
 }

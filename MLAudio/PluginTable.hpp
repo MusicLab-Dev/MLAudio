@@ -5,6 +5,7 @@
 
 #pragma once
 
+#include <MLCore/Assert.hpp>
 #include <MLCore/Vector.hpp>
 
 #include "PluginPtr.hpp"
@@ -26,23 +27,29 @@ namespace Audio
 class alignas(64) Audio::PluginTable
 {
 public:
-    /** @brief Return the default plugin table instance */
-    [[nodiscard]] static PluginTable &Get(void) noexcept { return _Instance; }
+    /** @brief Initialize unique instance */
+    static void Init(void) { _Instance.reset(new PluginTable()); }
+
+    /** @brief Destroy unique instance */
+    static void Destroy(void) { _Instance.reset(); }
+
+    /** @brief Return the unique plugin table instance */
+    [[nodiscard]] static PluginTable &Get(void) noexcept { return *_Instance; }
 
 
     /** @brief Register a factory using a path */
     IPluginFactory &registerFactory(const std::string &path);
 
     /** @brief Register a factory using a compiled plugin */
-    template<typename Type, CustomString Name, IPluginFactory::Tags Tags>
+    template<typename Type, const char *Name, IPluginFactory::Tags Tags>
     IPluginFactory &registerFactory(void);
 
 
     /** @brief Instantiates a new plugin using its factory name */
-    [[nodiscard]] PluginPtr instantiate(const std::string_view &view) noexcept;
+    [[nodiscard]] PluginPtr instantiate(const std::string_view &view);
 
     /** @brief Instantiates a new plugin using its factory */
-    [[nodiscard]] PluginPtr instantiate(IPluginFactory &factory) noexcept { return PluginPtr(factory.instantiate()); }
+    [[nodiscard]] PluginPtr instantiate(IPluginFactory &factory) { return PluginPtr(factory.instantiate()); }
 
 
     /** @brief Get a reference of the plugin factories associated to the table */
@@ -63,13 +70,20 @@ public: // Functions reserved to internal usage
     void decrementRefCount(IPlugin *plugin) noexcept_ndebug;
 
 private:
-    static inline PluginTable _Instance {};
+    static inline std::unique_ptr<PluginTable> _Instance {};
 
     PluginFactories     _factories {};
     Plugins             _instances {};
     RefCounts           _counters {};
 
+    /** @brief Private constructor */
     PluginTable(void) noexcept = default;
+
+    /** @brief Deleted semantics */
+    PluginTable(const PluginTable &other) noexcept = delete;
+    PluginTable(PluginTable &&other) noexcept = delete;
+    PluginTable &operator=(const PluginTable &other) noexcept = delete;
+    PluginTable &operator=(PluginTable &&other) noexcept = delete;
 };
 
 static_assert(alignof(Audio::PluginTable) == 64, "PluginTable must be aligned to 64 bytes !");

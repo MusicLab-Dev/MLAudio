@@ -12,8 +12,8 @@ namespace Audio
     class Automation;
     struct Point;
 
-    using Automations = FlatVector<Automation>;
-    using Points = FlatVector<Point>;
+    using Automations = Core::FlatVector<Automation>;
+    using Points = Core::FlatVector<Point>;
 };
 
 /** @brief Represent a point in an automation curve */

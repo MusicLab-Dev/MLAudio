@@ -11,7 +11,7 @@ namespace Audio
 {
     struct FlatNode;
 
-    using FlatTree =Core::FlatVector<FlatNode>;
+    using FlatTree = Core::FlatVector<FlatNode>;
 };
 
 struct alignas(16) Audio::FlatNode

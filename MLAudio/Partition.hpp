@@ -70,22 +70,22 @@ public:
 
 
     /** @brief Get the name of the partition */
-    [[nodiscard]] const CustomString &name(void) const noexcept { return _name; }
+    [[nodiscard]] const Core::FlatString &name(void) const noexcept { return _name; }
 
     /** @brief Set the partition name, return true if the name changed */
-    bool setName(CustomString &&name) noexcept;
+    bool setName(Core::FlatString &&name) noexcept;
 
 
     template<typename Functor>
     bool apply(const TimeRange &range, Functor &&functor) noexcept;
 
 private:
-    Notes           _notes {};
-    TimeRanges      _instances {};
-    CustomString    _name {};
-    NoteIndex       _lastID {};
-    Channels         _channel {};
-    bool            _muted { false };
+    Notes               _notes {};
+    TimeRanges          _instances {};
+    Core::FlatString    _name {};
+    NoteIndex           _lastID {};
+    Channels            _channel {};
+    bool                _muted { false };
 };
 
 #include "Partition.ipp"

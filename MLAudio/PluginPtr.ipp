@@ -9,7 +9,7 @@ inline Audio::PluginPtr::PluginPtr(IPlugin * const plugin) noexcept
     PluginTable::Get().addPlugin(plugin);
 }
 
-inline Audio::PluginPtr(const PluginPtr &other) noexcept
+inline Audio::PluginPtr::PluginPtr(const PluginPtr &other) noexcept
     : _plugin(other._plugin)
 {
     PluginTable::Get().incrementRefCount(_plugin);
@@ -17,7 +17,12 @@ inline Audio::PluginPtr(const PluginPtr &other) noexcept
 
 inline Audio::PluginPtr::~PluginPtr(void) noexcept
 {
-    if (_plugin) [[likely]]
+    if (_plugin)
         PluginTable::Get().decrementRefCount(_plugin);
 }
 
+inline Audio::PluginPtr &Audio::PluginPtr::operator=(const PluginPtr &other) noexcept
+{
+    PluginTable::Get().incrementRefCount(_plugin);
+    return *this;
+}

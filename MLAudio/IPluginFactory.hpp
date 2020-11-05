@@ -16,12 +16,23 @@ namespace Audio
 
     using PluginFactoryPtr = std::unique_ptr<IPluginFactory>;
 
-    using DLLSignature = PluginFactory *(*)(void);
+    using DLLSignature = IPluginFactory *(*)(void);
 };
 
 class Audio::IPluginFactory
 {
 public:
+    enum class Flags : std::uint16_t {
+        AudioInput      = 1,
+        AudioOutput     = 1 << 1,
+        NoteInput       = 1 << 2,
+        NoteOutput      = 1 << 3,
+        ControlInput    = 1 << 4,
+        ControlOutput   = 1 << 5,
+        SyncInput       = 1 << 6,
+        SyncOutput      = 1 << 7,
+    };
+
     enum class SDK : std::uint32_t {
         Internal, External
     };
@@ -58,7 +69,7 @@ public:
 
     virtual std::string_view getPath(void) = 0;
 
-    virtual IPlugin::Flags getFlags(void) = 0;
+    virtual Flags getFlags(void) = 0;
 
     virtual Tags getTags(void) = 0;
 

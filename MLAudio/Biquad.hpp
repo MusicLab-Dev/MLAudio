@@ -69,6 +69,7 @@ class DSP::Biquad
             _coefs.a[2] = 1 - alpha;
         break;
         case Type::BP:
+        case Type::BP2:
             _coefs.b[0] = alpha;
             _coefs.b[1] = 0;
             _coefs.b[2] = -alpha;

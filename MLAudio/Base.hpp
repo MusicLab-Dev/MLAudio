@@ -9,6 +9,7 @@
 
 #include <MLCore/Vector.hpp>
 #include <MLCore/FlatVector.hpp>
+#include <MLCore/FlatString.hpp>
 
 namespace Audio
 {

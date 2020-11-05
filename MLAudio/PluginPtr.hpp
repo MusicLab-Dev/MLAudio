@@ -28,8 +28,14 @@ public:
     /** @brief Decrement ref count */
     ~PluginPtr(void) noexcept;
 
+    /** @brief Acquire an existing plugin */
+    PluginPtr &operator=(const PluginPtr &other) noexcept;
+
+    /** @brief Move an existing plugin */
+    PluginPtr &operator=(PluginPtr &&other) noexcept { swap(other); return *this; }
+
     /** @brief Swap two instances */
-    void swap(PluginPtr &&plugin) noexcept { std::swap(_plugin, other._plugin); }
+    void swap(PluginPtr &other) noexcept { std::swap(_plugin, other._plugin); }
 
 
     /** @brief Dereference plugin pointer */

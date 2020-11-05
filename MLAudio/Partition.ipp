@@ -19,7 +19,7 @@ inline bool Audio::Partition::setChannels(const Channels channels) noexcept
     return true;
 }
 
-inline bool Audio::Partition::setName(CustomString &&name) noexcept
+inline bool Audio::Partition::setName(Core::FlatString &&name) noexcept
 {
     if (name == _name)
         return false;

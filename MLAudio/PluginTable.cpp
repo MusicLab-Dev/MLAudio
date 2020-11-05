@@ -9,8 +9,6 @@
 
 #include "PluginTable.hpp"
 
-using namespace std::literals;
-
 Audio::PluginPtr Audio::PluginTable::instantiate(const std::string_view &view)
 {
     for (auto &factory : _factories) {
@@ -18,7 +16,7 @@ Audio::PluginPtr Audio::PluginTable::instantiate(const std::string_view &view)
             continue;
         return instantiate(*factory);
     }
-    throw std::logic_error("Audio::PluginTable::instantiate: Plugin '"s + view + "' not found");
+    throw std::logic_error("Audio::PluginTable::instantiate: Plugin '" + std::string(view) + "' not found");
 }
 
 void Audio::PluginTable::addPlugin(IPlugin *plugin) noexcept_ndebug
@@ -29,7 +27,8 @@ void Audio::PluginTable::addPlugin(IPlugin *plugin) noexcept_ndebug
 
 void Audio::PluginTable::incrementRefCount(IPlugin *plugin) noexcept_ndebug
 {
-    for (auto i = 0u; auto &instance : _instances) {
+    auto i = 0u;
+    for (auto &instance : _instances) {
         if (plugin != instance) {
             ++i;
             continue;
@@ -40,15 +39,16 @@ void Audio::PluginTable::incrementRefCount(IPlugin *plugin) noexcept_ndebug
 
 void Audio::PluginTable::decrementRefCount(IPlugin *plugin) noexcept_ndebug
 {
-    for (auto i = 0u; auto &instance : _instances) {
+    auto i = 0u;
+    for (auto &instance : _instances) {
         if (plugin != instance) {
             ++i;
             continue;
         }
         if (!--_counters[i]) {
             delete _instances.at(i);
-            _instances.erase(i);
-            _counters.erase(i);
+            _instances.erase(_instances.begin() + i);
+            _counters.erase(_counters.begin() + i);
         }
     }
 }

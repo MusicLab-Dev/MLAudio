@@ -19,23 +19,17 @@ namespace Audio
 class Audio::IPlugin
 {
 public:
-    enum class Flags : std::uint16_t {
-        AudioInput      = 1,
-        AudioOutput     = 1 << 1,
-        NoteInput       = 1 << 2,
-        NoteOutput      = 1 << 3,
-        ControlInput    = 1 << 4,
-        ControlOutput   = 1 << 5,
-        SyncInput       = 1 << 6,
-        SyncOutput      = 1 << 7,
-    };
+    using Flags = IPluginFactory::Flags;
+
+    /** @brief Virtual destructor */
+    virtual ~IPlugin(void) noexcept = default;
 
     // virtual ParameterDescriptors getParameterDescriptors(void) const = 0;
 
     static PluginFactoryPtr GetFactory(void);
     static void SetFactory(PluginFactoryPtr factory);
 
-    IPlugin::Flags getFlags(void);
+    Flags getFlags(void);
 
     virtual bool hasAudioInput(void) const = 0;
     virtual bool hasAudioOutput(void) const = 0;

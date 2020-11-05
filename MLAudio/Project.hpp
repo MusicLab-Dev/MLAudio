@@ -14,8 +14,6 @@ namespace Audio
     class Project;
 
     using ProjectPtr = Project *;
-
-    using ProjectNameStr = std::unique_ptr<char *>;
 };
 
 class alignas(32) Audio::Project
@@ -29,8 +27,8 @@ public:
         Production, Live
     };
 
-    Project(ProjectNameStr &&name, PlaybackMode mode)
-        : _name(std::move(name)), _playbackMode(mode) {}
+    Project(Core::FlatString &&name, PlaybackMode mode) noexcept
+        : _playbackMode(mode), _name(std::move(name)) {}
 
     /** @brief  */
     void invalidateFlatTree(void);
@@ -48,10 +46,10 @@ public:
     void onAudioBlockGenerated(void);
 
 private:
-    NodePtr         _master { nullptr };
-    PlaybackMode    _playbackMode { PlaybackMode::Production };
-    FlatTree        _flatTree { 0u };
-    ProjectNameStr  _name { nullptr };
+    NodePtr             _master { nullptr };
+    PlaybackMode        _playbackMode { PlaybackMode::Production };
+    FlatTree            _flatTree {};
+    Core::FlatString    _name {};
 
     /** @brief  */
     void computeFlatTree(void);

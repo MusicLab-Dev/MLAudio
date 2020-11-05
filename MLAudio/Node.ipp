@@ -25,7 +25,7 @@ inline bool Audio::Node::setColor(const Color color) noexcept
     return true;
 }
 
-inline bool Audio::Node::setName(CustomString &&name) noexcept
+inline bool Audio::Node::setName(Core::FlatString &&name) noexcept
 {
     if (name == _name)
         return false;
