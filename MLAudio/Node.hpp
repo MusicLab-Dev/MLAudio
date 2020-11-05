@@ -21,8 +21,8 @@ namespace Audio
 
     using NodePtr = std::unique_ptr<Node>;
 
-    // Replace FlatVector ??
-    using Nodes = FlatVector<NodePtr>;
+    // ReplaceCore::FlatVector ??
+    using Nodes =Core::FlatVector<NodePtr>;
 };
 
 /** @brief A node contains a plugin, a partition table and an automation table */

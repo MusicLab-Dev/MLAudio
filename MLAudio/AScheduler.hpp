@@ -33,7 +33,7 @@ public:
         NotifyFunctor   notify { nullptr };
     };
 
-    using Events = FlatVector<Event>;
+    using Events =Core::FlatVector<Event>;
 
     enum class State : std::uint32_t {
         Pause, Play

@@ -11,7 +11,7 @@ namespace Audio
 {
     class Partition;
 
-    using Partitions = FlatVector<Partition>;
+    using Partitions =Core::FlatVector<Partition>;
 };
 
 class Audio::Partition

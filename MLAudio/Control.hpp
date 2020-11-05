@@ -13,7 +13,7 @@ namespace Audio
 {
     class Control;
 
-    using Controls = FlatVector<Control>;
+    using Controls =Core::FlatVector<Control>;
 };
 
 /** @brief A control describe how to change a plugin parameter over time (both Production & Live).

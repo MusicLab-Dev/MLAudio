@@ -3,6 +3,10 @@
  * @ Description: PluginTable.cpp
  */
 
+#include <stdexcept>
+
+#include <MLCore/Assert.hpp>
+
 #include "PluginTable.hpp"
 
 using namespace std::literals;
@@ -12,7 +16,7 @@ Audio::PluginPtr Audio::PluginTable::instantiate(const std::string_view &view)
     for (auto &factory : _factories) {
         if (factory->getName() != view)
             continue;
-        return instantiate(factory);
+        return instantiate(*factory);
     }
     throw std::logic_error("Audio::PluginTable::instantiate: Plugin '"s + view + "' not found");
 }

@@ -13,7 +13,7 @@ namespace Audio
 {
     struct Note;
 
-    using Notes = FlatVector<Note>;
+    using Notes =Core::FlatVector<Note>;
 };
 
 struct Audio::Note

@@ -5,6 +5,8 @@
 
 #pragma once
 
+#include <MLCore/Vector.hpp>
+
 #include "PluginPtr.hpp"
 
 namespace Audio
@@ -12,7 +14,7 @@ namespace Audio
     class PluginTable;
 
     /** @brief Vector of plugin factories */
-    using PluginFactories = TinyVector<PluginFactoryPtr>;
+    using PluginFactories = Core::TinyVector<PluginFactoryPtr>;
 
     /** @brief Vector of plugin pointers */
     using Plugins = Core::TinyVector<IPlugin *>;

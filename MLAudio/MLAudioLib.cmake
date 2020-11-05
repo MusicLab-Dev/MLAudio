@@ -20,7 +20,6 @@ set(MLAudioLibSources
     ${MLAudioLibDir}/InternalFactory.hpp
     ${MLAudioLibDir}/IPlugin.hpp
     ${MLAudioLibDir}/IPluginFactory.hpp
-    ${MLAudioLibDir}/PluginFactoryPtr.hpp
     ${MLAudioLibDir}/Node.hpp
     ${MLAudioLibDir}/Node.ipp
     ${MLAudioLibDir}/Note.hpp

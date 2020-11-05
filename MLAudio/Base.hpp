@@ -36,8 +36,8 @@ namespace Audio
         TimeIndex to {};
     };
 
-    using BeatRanges = FlatVector<BeatRange>;
-    using TimeRanges = FlatVector<TimeRange>;
+    using BeatRanges = Core::FlatVector<BeatRange>;
+    using TimeRanges = Core::FlatVector<TimeRange>;
 };
 
 static_assert(sizeof(Audio::BeatRange) == 8, "BeatRange must take 8 bytes !");
