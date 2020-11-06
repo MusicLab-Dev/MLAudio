@@ -69,7 +69,7 @@ public:
 
     virtual std::string_view getPath(void) = 0;
 
-    virtual Flags getFlags(void) = 0;
+    // virtual Flags getFlags(void) = 0;
 
     virtual Tags getTags(void) = 0;
 

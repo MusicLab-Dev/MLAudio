@@ -11,7 +11,7 @@ namespace Audio
 {
     class Connection;
 
-    using Connections =Core::FlatVector<Connection>;
+    using Connections = Core::FlatVector<Connection>;
 };
 
 class alignas(16) Audio::Connection

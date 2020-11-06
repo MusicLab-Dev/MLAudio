@@ -11,41 +11,20 @@ namespace Audio
 {
     class Partition;
 
-    using Partitions =Core::FlatVector<Partition>;
+    using Partitions = Core::FlatVector<Partition>;
 };
 
 class Audio::Partition
 {
 public:
     /** @brief Get the internal notes */
-    [[nodiscard]] const Notes &notes(void) const noexcept { return _notes; }
+    [[nodiscard]] inline const Notes &notes(void) const noexcept { return _notes; }
+
+    /** @brief Get the internal notes */
+    [[nodiscard]] inline Notes &notes(void) noexcept { return _notes; }
 
     /** @brief Get the internal notes count */
-    [[nodiscard]] std::size_t count(void) const noexcept;
-
-
-    /** @brief Add a single note to the partition */
-    void add(const Note &note) noexcept;
-
-    /** @brief Add multiple notes to the partition */
-    void add(const Notes &notes) noexcept;
-
-    /** @brief Replace actual notes by another ones to the partition */
-    void replace(const Notes &notes) noexcept;
-
-
-    /** @brief Get the internal notes count */
-    bool remove(const size_t index) noexcept;
-
-    /** @brief Get the internal notes count */
-    bool remove(const TimeRange &range) noexcept;
-
-
-    /** @brief Get a note at a specified index (throw if invalid index ?) */
-    [[nodiscard]] Note &get(const size_t index);
-
-    /** @brief Set a note at a specified index (throw if invalid index ?) */
-    [[nodiscard]] const Note &get(const size_t index) const;
+    [[nodiscard]] inline std::size_t count(void) const noexcept { return _notes.size(); }
 
 
     /** @brief Get the internal intances */
@@ -84,7 +63,7 @@ private:
     TimeRanges          _instances {};
     Core::FlatString    _name {};
     NoteIndex           _lastID {};
-    Channels            _channel {};
+    Channels            _channel { 0u };
     bool                _muted { false };
 };
 

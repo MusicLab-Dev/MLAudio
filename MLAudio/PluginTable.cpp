@@ -40,7 +40,7 @@ void Audio::PluginTable::incrementRefCount(IPlugin *plugin) noexcept_ndebug
 void Audio::PluginTable::decrementRefCount(IPlugin *plugin) noexcept_ndebug
 {
     auto i = 0u;
-    for (auto &instance : _instances) {
+    for (auto instance : _instances) {
         if (plugin != instance) {
             ++i;
             continue;

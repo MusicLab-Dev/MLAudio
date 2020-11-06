@@ -6,29 +6,34 @@
 #pragma once
 
 #include "IPluginFactory.hpp"
+#include "Plugins/Oscillator.hpp"
 
 namespace Audio
 {
-    template<typename Plugin>
+    template<typename Plugin, const char *Name, Audio::IPluginFactory::Tags FactoryTags>
     class InternalFactory;
 };
 
-template<typename Plugin>
+template<typename Plugin, const char *Name, Audio::IPluginFactory::Tags FactoryTags>
 class Audio::InternalFactory final : public Audio::IPluginFactory
 {
 public:
 
-    virtual std::string_view getName(void) noexcept final { return _name; }
+    InternalFactory(void) = default;
 
-    virtual std::string_view getPath(void) noexcept final { return _vendor; }
+    virtual std::string_view getName(void) noexcept final { return std::string_view(Name); }
 
-    virtual Tags getTags(void) noexcept final { return _tags; }
+    std::string_view getVendor(void) noexcept { return "_vendor"; }
+
+    virtual std::string_view getPath(void) noexcept final { return "_path"; }
+
+    virtual Tags getTags(void) noexcept final { return FactoryTags; }
 
     // virtual Capabilities getCapabilities(void) noexcept final;
 
-    virtual SDK getSDK(void) noexcept final;
+    virtual SDK getSDK(void) noexcept final { return SDK::Internal; }
 
-    virtual PluginPtr instantiate(void) noexcept final;
+    [[nodiscard]] virtual IPlugin *instantiate(void) noexcept final { return new Plugin(); }
 
 private:
 };

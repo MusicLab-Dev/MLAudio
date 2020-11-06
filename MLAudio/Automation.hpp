@@ -13,7 +13,7 @@ namespace Audio
     struct Point;
 
     using Automations = Core::FlatVector<Automation>;
-    using Points = Core::FlatVector<Point>;
+    using Points = Core::SortedFlatVector<Point>;
 };
 
 /** @brief Represent a point in an automation curve */

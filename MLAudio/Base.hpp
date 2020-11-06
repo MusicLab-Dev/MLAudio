@@ -11,11 +11,20 @@
 #include <MLCore/FlatVector.hpp>
 #include <MLCore/FlatString.hpp>
 
+#include "BaseIndex.hpp"
+
+namespace Core
+{
+    template<typename Type>
+    using SortedVector = Vector<Type>;
+
+    template<typename Type>
+    using SortedFlatVector = FlatVector<Type>;
+}
+
 namespace Audio
 {
-    using Beat = std::uint32_t;
     using Tempo = float;
-    using TimeIndex = std::uint32_t;
     using Color = std::uint32_t;
     using NoteIndex = std::uint16_t;
     using Key = std::uint8_t;
@@ -25,20 +34,9 @@ namespace Audio
     using Tuning = uint16_t;
     using Channels = std::uint8_t;
 
-    struct BeatRange
-    {
-        Beat from {};
-        Beat to {};
-    };
 
-    struct TimeRange
-    {
-        TimeIndex from {};
-        TimeIndex to {};
-    };
-
-    using BeatRanges = Core::FlatVector<BeatRange>;
-    using TimeRanges = Core::FlatVector<TimeRange>;
+    using BeatRanges = Core::SortedFlatVector<BeatRange>;
+    using TimeRanges = Core::SortedFlatVector<TimeRange>;
 };
 
 static_assert(sizeof(Audio::BeatRange) == 8, "BeatRange must take 8 bytes !");

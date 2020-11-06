@@ -8,6 +8,7 @@ set(MLAudioLibSources
     ${MLAudioLibDir}/AScheduler.hpp
     ${MLAudioLibDir}/Automation.hpp
     ${MLAudioLibDir}/Base.hpp
+    ${MLAudioLibDir}/BaseIndex.hpp
     ${MLAudioLibDir}/Buffer.hpp
     ${MLAudioLibDir}/Connection.hpp
     ${MLAudioLibDir}/Control.hpp
@@ -28,10 +29,14 @@ set(MLAudioLibSources
     ${MLAudioLibDir}/PluginPtr.hpp
     ${MLAudioLibDir}/PluginTable.hpp
     ${MLAudioLibDir}/PluginTable.cpp
+    ${MLAudioLibDir}/PluginTable.ipp
     ${MLAudioLibDir}/Project.hpp
     ${MLAudioLibDir}/Project.cpp
     ${MLAudioLibDir}/Biquad.hpp
     ${MLAudioLibDir}/Biquad.cpp
+
+    ${MLAudioLibDir}/Plugins/Oscillator.hpp
+    ${MLAudioLibDir}/Plugins/Oscillator.ipp
 )
 
 add_library(${PROJECT_NAME} ${MLAudioLibSources})

@@ -1,9 +1,13 @@
 /**
  * @ Author: Pierre Veysseyre
- * @ Description: Partition
+ * @ Description: Partition implementation
  */
 
-inline bool Audio::Partition::setMuted(const bool muted) noexcept
+#include <stdexcept>
+
+using namespace Audio;
+
+inline bool Partition::setMuted(const bool muted) noexcept
 {
     if (muted == _muted)
         return false;
@@ -11,7 +15,7 @@ inline bool Audio::Partition::setMuted(const bool muted) noexcept
     return true;
 }
 
-inline bool Audio::Partition::setChannels(const Channels channels) noexcept
+inline bool Partition::setChannels(const Channels channels) noexcept
 {
     if (channels == _channel)
         return false;
@@ -19,7 +23,7 @@ inline bool Audio::Partition::setChannels(const Channels channels) noexcept
     return true;
 }
 
-inline bool Audio::Partition::setName(Core::FlatString &&name) noexcept
+inline bool Partition::setName(Core::FlatString &&name) noexcept
 {
     if (name == _name)
         return false;

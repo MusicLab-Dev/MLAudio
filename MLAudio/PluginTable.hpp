@@ -41,9 +41,8 @@ public:
     IPluginFactory &registerFactory(const std::string &path);
 
     /** @brief Register a factory using a compiled plugin */
-    template<typename Type, const char *Name, IPluginFactory::Tags Tags>
+    template<typename Type, const char *Name, IPluginFactory::Tags FactoryTags>
     IPluginFactory &registerFactory(void);
-
 
     /** @brief Instantiates a new plugin using its factory name */
     [[nodiscard]] PluginPtr instantiate(const std::string_view &view);
@@ -90,3 +89,5 @@ static_assert(alignof(Audio::PluginTable) == 64, "PluginTable must be aligned to
 static_assert(sizeof(Audio::PluginTable) == 64, "PluginTable must take 64 bytes !");
 
 #include "PluginPtr.ipp"
+
+#include "PluginTable.ipp"
