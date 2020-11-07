@@ -15,35 +15,24 @@ namespace Audio
 class Audio::Oscillator final : public Audio::IPlugin
 {
 public:
-    Oscillator(void) = default;
-
-    ~Oscillator(void) = default;
 
     virtual Flags getFlags(void) const noexcept;
 
-    virtual bool hasAudioInput(void) const noexcept { return false; }
-    virtual bool hasAudioOutput(void) const noexcept { return true; }
-    virtual bool receiveAudio(const Buffers &outputs) {}
-    virtual void sendAudio(Buffers &inputs) {}
+    virtual bool receiveAudio(const Buffers &outputs) noexcept { return false; }
+    virtual void sendAudio(Buffers &inputs) noexcept {}
 
-    virtual bool hasNoteInput(void) const noexcept { return true; }
-    virtual bool hasNoteOutput(void) const noexcept { return false; }
-    virtual bool receiveNotes(const Notes &notes) {}
-    virtual void sendNotes(Notes &notes) {}
+    virtual bool receiveNotes(const Notes &notes) noexcept { return false; }
+    virtual void sendNotes(Notes &notes) noexcept {}
 
-    virtual bool hasControlInput(void) const noexcept { return true; }
-    virtual bool hasControlOutput(void) const noexcept { return false; }
-    virtual bool receiveControls(const Controls &controls) {}
-    virtual bool sendControls(Controls &controls) {}
+    virtual bool receiveControls(const Controls &controls) noexcept { return false; }
+    virtual bool sendControls(Controls &controls) noexcept { return false; }
 
-    virtual bool hasSyncInput(void) const noexcept { return false; }
-    virtual bool hasSyncOutput(void) const noexcept { return false; }
-    virtual bool receiveSync(const Tempo &tempo) {}
-    virtual void sendSync(Tempo &tempo) {}
+    virtual bool receiveSync(const Tempo &tempo) noexcept { return false; }
+    virtual void sendSync(Tempo &tempo) noexcept {}
 
-    virtual void onAudioGenerationStarted(const TimeRange &range) {}
-    virtual void onAudioGenerationStopped(void) {}
-    virtual void onAudioBlockGenerated(void) {}
+    virtual void onAudioGenerationStarted(const TimeRange &range) noexcept {}
+    virtual void onAudioGenerationStopped(void) noexcept {}
+    virtual void onAudioBlockGenerated(void) noexcept {}
 
 private:
     int a { 23 };

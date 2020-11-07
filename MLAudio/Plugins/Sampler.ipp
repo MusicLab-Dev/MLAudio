@@ -1,9 +1,9 @@
 /**
  * @ Author: Pierre Veysseyre
- * @ Description: Oscillator implementation
+ * @ Description: Sampler implementation
  */
 
-inline Audio::IPlugin::Flags Audio::Oscillator::getFlags(void) const noexcept
+inline Audio::IPlugin::Flags Audio::Sampler::getFlags(void) const noexcept
 {
     return static_cast<Flags>(
         static_cast<std::size_t>(Flags::AudioOutput) |

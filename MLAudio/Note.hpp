@@ -23,22 +23,22 @@ struct Audio::Note
     };
 
     /** @brief Check if an another note is the same */
-    [[nodiscard]] inline bool operator==(const Note &other) const noexcept {
-        return (
-            (range == other.range) &&
-            (type == other.type) &&
-            (key == other.key) &&
-            (velocity == other.velocity) &&
-            (tunning == other.tunning) &&
-            (noteIndex == other.noteIndex)
-        );
-    }
+    [[nodiscard]] inline bool operator==(const Note &other) const noexcept;
 
-    [[nodiscard]] inline bool operator!=(const Note &other) const noexcept { return !(operator==(other)); }
+    /** @brief Check if an another note is different */
+    [[nodiscard]] inline bool operator!=(const Note &other) const noexcept;
 
-    [[nodiscard]] inline bool operator>(const Note &other) const noexcept {
+    /** @brief Check if this note come after an another one */
+    [[nodiscard]] inline bool operator>(const Note &other) const noexcept;
 
-    }
+    /** @brief Check if this note come after an another one or in same time */
+    [[nodiscard]] inline bool operator>=(const Note &other) const noexcept;
+
+    /** @brief Check if this note come before an another one */
+    [[nodiscard]] inline bool operator<(const Note &other) const noexcept;
+
+    /** @brief Check if this note come before an another one or in same time */
+    [[nodiscard]] inline bool operator<=(const Note &other) const noexcept;
 
     BeatRange   range {};
     EventType   type {};
@@ -47,5 +47,7 @@ struct Audio::Note
     Tuning      tunning { 0u };
     NoteIndex   noteIndex {};
 };
+
+#include "Note.ipp"
 
 static_assert(sizeof(Audio::Note) == 16, "Note must take 16 bytes !");

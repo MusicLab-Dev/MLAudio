@@ -23,9 +23,10 @@ set(MLAudioLibSources
     ${MLAudioLibDir}/IPluginFactory.hpp
     ${MLAudioLibDir}/Node.hpp
     ${MLAudioLibDir}/Node.ipp
-    ${MLAudioLibDir}/Note.hpp
     ${MLAudioLibDir}/Partition.hpp
     ${MLAudioLibDir}/Partition.ipp
+    ${MLAudioLibDir}/Note.hpp
+    ${MLAudioLibDir}/Note.ipp
     ${MLAudioLibDir}/PluginPtr.hpp
     ${MLAudioLibDir}/PluginTable.hpp
     ${MLAudioLibDir}/PluginTable.cpp
@@ -37,6 +38,8 @@ set(MLAudioLibSources
 
     ${MLAudioLibDir}/Plugins/Oscillator.hpp
     ${MLAudioLibDir}/Plugins/Oscillator.ipp
+    ${MLAudioLibDir}/Plugins/Sampler.hpp
+    ${MLAudioLibDir}/Plugins/Sampler.ipp
 )
 
 add_library(${PROJECT_NAME} ${MLAudioLibSources})
