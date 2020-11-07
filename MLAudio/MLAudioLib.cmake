@@ -9,6 +9,7 @@ set(MLAudioLibSources
     ${MLAudioLibDir}/Automation.hpp
     ${MLAudioLibDir}/Base.hpp
     ${MLAudioLibDir}/BaseIndex.hpp
+    ${MLAudioLibDir}/UtilsMidi.hpp
     ${MLAudioLibDir}/Buffer.hpp
     ${MLAudioLibDir}/Connection.hpp
     ${MLAudioLibDir}/Control.hpp

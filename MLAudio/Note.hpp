@@ -22,6 +22,8 @@ struct Audio::Note
         On, Off, PolyPressure
     };
 
+    Note(const BeatRange &r, Key k = 69, Velocity vel = 0x7F) : range(r), key(k), velocity(vel) {}
+
     /** @brief Check if an another note is the same */
     [[nodiscard]] inline bool operator==(const Note &other) const noexcept;
 
@@ -41,9 +43,9 @@ struct Audio::Note
     [[nodiscard]] inline bool operator<=(const Note &other) const noexcept;
 
     BeatRange   range {};
-    EventType   type {};
-    Key         key {};
-    Velocity    velocity {};
+    EventType   type { EventType::On };
+    Key         key { 69u };
+    Velocity    velocity { 0x7F };
     Tuning      tunning { 0u };
     NoteIndex   noteIndex {};
 };

@@ -8,6 +8,8 @@ set(MLAudioTestsSources
     ${MLAudioTestsDir}/tests_PluginTable.cpp
     ${MLAudioTestsDir}/tests_Project.cpp
     ${MLAudioTestsDir}/tests_Partition.cpp
+    ${MLAudioTestsDir}/tests_Note.cpp
+    ${MLAudioTestsDir}/tests_UtilsMidi.cpp
 )
 
 add_executable(${CMAKE_PROJECT_NAME} ${MLAudioTestsSources})
