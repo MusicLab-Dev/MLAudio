@@ -5,16 +5,16 @@
 
 #include <benchmark/benchmark.h>
 
-#include <MLAudio/Instance.hpp>
+// #include <MLAudio/Instance.hpp>
 
-using namespace ML::Audio;
+// using namespace Audio;
 
-static void InstanceCreationDestruction(benchmark::State &state)
-{
-    for (auto _ : state) {
-        Instance instance;
-        benchmark::DoNotOptimize(instance);
-    }
-}
+// static void InstanceCreationDestruction(benchmark::State &state)
+// {
+//     for (auto _ : state) {
+//         Instance instance;
+//         benchmark::DoNotOptimize(instance);
+//     }
+// }
 
-BENCHMARK(InstanceCreationDestruction);
+// BENCHMARK(InstanceCreationDestruction);

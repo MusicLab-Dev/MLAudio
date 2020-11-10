@@ -5,6 +5,7 @@ set(MLAudioBenchmarksDir ${MLAudioDir}/Benchmarks)
 set(MLAudioBenchmarksSources
     ${MLAudioBenchmarksDir}/Main.cpp
     ${MLAudioBenchmarksDir}/bench_Instance.cpp
+    ${MLAudioBenchmarksDir}/bench_Biquad.cpp
 )
 
 add_executable(${CMAKE_PROJECT_NAME} ${MLAudioBenchmarksSources})

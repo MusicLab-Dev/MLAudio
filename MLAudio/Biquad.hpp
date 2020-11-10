@@ -5,133 +5,80 @@
 
 #pragma once
 
+#include <cstdint>
 #include <cmath>
 
 namespace DSP
 {
+    struct BiquadParam {
+        enum class BiquadForm : uint8_t {
+            DirectForm1,        // 4 registers, 3 addOp -> better for fixed-points
+            DirectForm2,        // 2 registers, 4 addOp -> better for fixed-points
+            TransposedForm1,    // 4 registers, 4 addOp -> better for floating-points
+            TransposedForm2     // 2 registers, 3 addOp -> better for floating-points
+        };
+
+        enum class FilterType : uint8_t {
+            LowPass,
+            HighPass,
+            BandPass,
+            BandPass2,
+            BandStop    /* Notch */,
+            Peak,
+            LowShelf,
+            HighShelf
+        };
+    };
+
+
+    template<BiquadParam::BiquadForm Form>
+    class BiquadBase;
+
+    template<BiquadParam::BiquadForm Form, BiquadParam::FilterType Filter>
     class Biquad;
+
 };
 
-class DSP::Biquad
+template<DSP::BiquadParam::BiquadForm Form>
+class DSP::BiquadBase
 {
-    enum class Type : unsigned char {
-        LP, HP, BP, BP2, BS /* Notch */, Peak, LS, HS
-    };
+public:
 
     struct Coefficients
     {
         double a[3] { 0.0 };
         double b[3] { 0.0 };
     };
-    // static_assert(sizeof(Coefficients) == 48, "Coefficients must take 48 bytes !");
+    static_assert(sizeof(Coefficients) == 48, "Coefficients must take 48 bytes !");
 
-    struct History
-    {
-        double in[2] { 0.0 };
-        double out[2] { 0.0 };
 
-        void shift(const double i, const double o) noexcept {
-            in[1] = in[0];
-            in[0] = i;
-            out[1] = out[0];
-            out[0] = o;
-        };
-    };
-    // static_assert(sizeof(History) == 32, "History must take 32 bytes !");
+    [[nodiscard]] float process(const float in) noexcept;
 
-    Biquad(Type type, const double sampleRate, const double freq, const double gainDb, const double q, bool qAsBandWidth = false) {
-        setup(type, sampleRate, freq, gainDb, q, qAsBandWidth);
-    }
+    [[nodiscard]] const Coefficients &coefficients(void) const noexcept { return _coefs; }
+    // Coefficients &coefficients(void) noexcept { return _coefs; }
 
-    void setup(Type type, const double sampleRate, const double freq, const double gainDb, const double q, bool qAsBandWidth) {
-        const auto amp = std::pow(10.0, gainDb / 40.0);
-        const auto omega = 2.0 * M_PI * freq / sampleRate;
-        const auto tsin = std::sin(omega);
-        const auto tcos = std::cos(omega);
-        double alpha = qAsBandWidth ? (tsin * std::sinh(std::log(2.0) / 2.0 * q * omega / tsin)) : (tsin / (2.0 * q));
-        double beta = std::sqrt(amp) / q;
 
-        switch (type) {
-        case Type::LP:
-            _coefs.b[0] = (1.0 - tcos) / 2.0;
-            _coefs.b[1] = 1.0 - tcos;
-            _coefs.b[2] = (1.0 - tcos) / 2.0;
-            _coefs.a[0] = 1.0 + alpha;
-            _coefs.a[1] = -2.0 * tcos;
-            _coefs.a[2] = 1.0 - alpha;
-            break;
-        case Type::HP:
-            _coefs.b[0] = (1 + tcos) / 2;
-            _coefs.b[1] = -(1 + tcos);
-            _coefs.b[2] = (1 + tcos) / 2;
-            _coefs.a[0] = 1 + alpha;
-            _coefs.a[1] = -2 * tcos;
-            _coefs.a[2] = 1 - alpha;
-        break;
-        case Type::BP:
-        case Type::BP2:
-            _coefs.b[0] = alpha;
-            _coefs.b[1] = 0;
-            _coefs.b[2] = -alpha;
-            _coefs.a[0] = 1 + alpha;
-            _coefs.a[1] = -2 * tcos;
-            _coefs.a[2] = 1 - alpha;
-            break;
-        case Type::BS:
-            _coefs.b[0] = 1;
-            _coefs.b[1] = -2 * tcos;
-            _coefs.b[2] = 1;
-            _coefs.a[0] = 1 + alpha;
-            _coefs.a[1] = -2 * tcos;
-            _coefs.a[2] = 1 - alpha;
-            break;
-        case Type::Peak:
-            _coefs.b[0] = 1 + (alpha * amp);
-            _coefs.b[1] = -2 * tcos;
-            _coefs.b[2] = 1 - (alpha * amp);
-            _coefs.a[0] = 1 + (alpha /amp);
-            _coefs.a[1] = -2 * tcos;
-            _coefs.a[2] = 1 - (alpha /amp);
-            break;
-        case Type::LS:
-            _coefs.b[0] = amp * ((amp + 1) - (amp - 1) * tcos + beta * tsin);
-            _coefs.b[1] = 2 * amp * ((amp - 1) - (amp + 1) * tcos);
-            _coefs.b[2] = amp * ((amp + 1) - (amp - 1) * tcos - beta * tsin);
-            _coefs.a[0] = (amp + 1) + (amp - 1) * tcos + beta * tsin;
-            _coefs.a[1] = -2 * ((amp - 1) + (amp + 1) * tcos);
-            _coefs.a[2] = (amp + 1) + (amp - 1) * tcos - beta * tsin;
-            break;
-        case Type::HS:
-            _coefs.b[0] = amp * ((amp + 1) + (amp - 1) * tcos + beta * tsin);
-            _coefs.b[1] = -2 * amp * ((amp - 1) + (amp + 1) * tcos);
-            _coefs.b[2] = amp * ((amp + 1) + (amp - 1) * tcos - beta * tsin);
-            _coefs.a[0] = (amp + 1) - (amp - 1) * tcos + beta * tsin;
-            _coefs.a[1] = 2 * ((amp - 1) - (amp + 1) * tcos);
-            _coefs.a[2] = (amp + 1) - (amp - 1) * tcos - beta * tsin;
-            break;
-        }
-        _coefs.a[0] = _coefs.b[0] / _coefs.a[0];
-        _coefs.a[1] = _coefs.b[1] / _coefs.a[0];
-        _coefs.a[2] = _coefs.b[2] / _coefs.a[0];
-        _coefs.a[3] = _coefs.a[1] / _coefs.a[0];
-        _coefs.a[4] = _coefs.a[2] / _coefs.a[0];
-
-        _history.in[0] = _history.in[1] = 0.0;
-        _history.out[0] = _history.out[1] = 0.0;
-    }
-
-    float process(const float in) noexcept {
-        float out = _coefs.b[0] * in + _coefs.b[1] * _history.in[0] + _coefs.b[2] * _history.in[1] - _coefs.a[1] * _history.out[0] - _coefs.a[2] * _history.out[1];
-
-        _history.shift(in, out);
-        return out;
-    }
-
-private:
-    // Type            _type { Type::LP };
-    Coefficients    _coefs {};
-    History         _history {};
+protected:
+    Coefficients    _coefs;
+    double          _regs[(Form == BiquadParam::BiquadForm::DirectForm1 || Form == BiquadParam::BiquadForm::TransposedForm1) ? 4 : 2] { 0.0 };
 };
 
-// static_assert(alignof(DSP::Biquad) == 8, "Biquad must be aligned to 8 bytes !");
-// static_assert(sizeof(DSP::Biquad) == 80, "Biquad must take 80 bytes !");
+
+template<DSP::BiquadParam::BiquadForm Form, DSP::BiquadParam::FilterType Filter>
+class DSP::Biquad : public DSP::BiquadBase<Form>
+{
+public:
+
+    void foo(void);
+
+    [[nodiscard]] void generateCoefficients(const double sampleRate, const double freq, const double gain, const double q, bool qAsBandWidth = false);
+
+private:
+
+};
+
+
+#include "Biquad.ipp"
+
+// // static_assert(alignof(DSP::Biquad) == 8, "Biquad must be aligned to 8 bytes !");
+// // static_assert(sizeof(DSP::Biquad) == 80, "Biquad must take 80 bytes !");

@@ -18,8 +18,8 @@ public:
 
     virtual Flags getFlags(void) const noexcept;
 
-    virtual bool receiveAudio(const Buffers &outputs) noexcept { return false; }
-    virtual void sendAudio(Buffers &inputs) noexcept {}
+    virtual bool receiveAudio(const Buffers &inputs) noexcept { return false; }
+    virtual void sendAudio(Buffers &outputs) noexcept {}
 
     virtual bool receiveNotes(const Notes &notes) noexcept { return false; }
     virtual void sendNotes(Notes &notes) noexcept {}

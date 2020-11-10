@@ -36,6 +36,10 @@ set(MLAudioLibSources
     ${MLAudioLibDir}/Project.cpp
     ${MLAudioLibDir}/Biquad.hpp
     ${MLAudioLibDir}/Biquad.cpp
+    ${MLAudioLibDir}/Biquad.ipp
+    # ${MLAudioLibDir}/Biq.hpp
+    # ${MLAudioLibDir}/Biq.cpp
+    # ${MLAudioLibDir}/Biq.ipp
 
     ${MLAudioLibDir}/Plugins/Oscillator.hpp
     ${MLAudioLibDir}/Plugins/Oscillator.ipp
