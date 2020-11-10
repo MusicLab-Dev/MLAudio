@@ -51,10 +51,9 @@ add_library(${PROJECT_NAME} ${MLAudioLibSources})
 
 target_include_directories(${PROJECT_NAME} PUBLIC
     ${MLAudioDir}
-    ${SDL2_INCLUDE_DIRS}
 )
 
 target_link_libraries(${PROJECT_NAME} PUBLIC
     MLCoreLib
-    ${SDL2_LIBRARIES}
+    SDL2
 )
