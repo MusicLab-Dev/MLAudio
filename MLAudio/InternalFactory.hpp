@@ -6,7 +6,6 @@
 #pragma once
 
 #include "IPluginFactory.hpp"
-#include "Plugins/Oscillator.hpp"
 
 namespace Audio
 {

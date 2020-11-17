@@ -51,14 +51,14 @@ public:
     bool stop(void) noexcept;
 
 
-    Beat currentBeat(void) const noexcept;
+    [[nodiscard]] Beat currentBeat(void) const noexcept;
 
     bool setCurrentBeat(const Beat beat) const noexcept;
 
 
-    Project &project(void) noexcept { return *_project; }
+    [[nodiscard]] Project &project(void) noexcept { return *_project; }
 
-    const Project &project(void) const noexcept { return *_project; }
+    [[nodiscard]] const Project &project(void) const noexcept { return *_project; }
 
     void setProject(ProjectPtr &&project) noexcept { _project = std::move(project); }
 
@@ -81,7 +81,7 @@ protected:
         postWork(Functor &&functor, Args &&...args) = 0;
 
 
-    void onAudioBlockGenerated(void) = 0;
+    virtual void onAudioBlockGenerated(void) = 0;
 
 private:
     std::atomic<State>      _state { State::Pause };

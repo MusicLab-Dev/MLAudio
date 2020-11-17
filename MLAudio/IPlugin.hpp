@@ -47,12 +47,12 @@ public:
     virtual void onAudioGenerationStopped(void) noexcept = 0;
     virtual void onAudioBlockGenerated(void) noexcept = 0;
 
-    [[nodiscard]] inline bool hasAudioInput(void) const noexcept { return static_cast<std::size_t>(getFlags()) & static_cast<std::size_t>(Flags::AudioInput); }
-    [[nodiscard]] inline bool hasAudioOutput(void) const noexcept { return static_cast<std::size_t>(getFlags()) & static_cast<std::size_t>(Flags::AudioOutput); }
-    [[nodiscard]] inline bool hasNoteInput(void) const noexcept { return static_cast<std::size_t>(getFlags()) & static_cast<std::size_t>(Flags::NoteInput); }
-    [[nodiscard]] inline bool hasNoteOutput(void) const noexcept { return static_cast<std::size_t>(getFlags()) & static_cast<std::size_t>(Flags::NoteOutput); }
-    [[nodiscard]] inline bool hasControlInput(void) const noexcept { return static_cast<std::size_t>(getFlags()) & static_cast<std::size_t>(Flags::ControlInput); }
+    [[nodiscard]] inline bool hasAudioInput(void) const noexcept    { return static_cast<std::size_t>(getFlags()) & static_cast<std::size_t>(Flags::AudioInput); }
+    [[nodiscard]] inline bool hasAudioOutput(void) const noexcept   { return static_cast<std::size_t>(getFlags()) & static_cast<std::size_t>(Flags::AudioOutput); }
+    [[nodiscard]] inline bool hasNoteInput(void) const noexcept     { return static_cast<std::size_t>(getFlags()) & static_cast<std::size_t>(Flags::NoteInput); }
+    [[nodiscard]] inline bool hasNoteOutput(void) const noexcept    { return static_cast<std::size_t>(getFlags()) & static_cast<std::size_t>(Flags::NoteOutput); }
+    [[nodiscard]] inline bool hasControlInput(void) const noexcept  { return static_cast<std::size_t>(getFlags()) & static_cast<std::size_t>(Flags::ControlInput); }
     [[nodiscard]] inline bool hasControlOutput(void) const noexcept { return static_cast<std::size_t>(getFlags()) & static_cast<std::size_t>(Flags::ControlOutput); }
-    [[nodiscard]] inline bool hasSyncInput(void) const noexcept { return static_cast<std::size_t>(getFlags()) & static_cast<std::size_t>(Flags::SyncInput); }
-    [[nodiscard]] inline bool hasSyncOutput(void) const noexcept { return static_cast<std::size_t>(getFlags()) & static_cast<std::size_t>(Flags::SyncOutput); }
+    [[nodiscard]] inline bool hasSyncInput(void) const noexcept     { return static_cast<std::size_t>(getFlags()) & static_cast<std::size_t>(Flags::SyncInput); }
+    [[nodiscard]] inline bool hasSyncOutput(void) const noexcept    { return static_cast<std::size_t>(getFlags()) & static_cast<std::size_t>(Flags::SyncOutput); }
 };

@@ -6,6 +6,7 @@ set(MLAudioTestsSources
     ${MLAudioTestsDir}/tests_Device.cpp
     ${MLAudioTestsDir}/tests_Control.cpp
     ${MLAudioTestsDir}/tests_PluginTable.cpp
+    ${MLAudioTestsDir}/tests_IPlugin.cpp
     ${MLAudioTestsDir}/tests_Project.cpp
     ${MLAudioTestsDir}/tests_Partition.cpp
     ${MLAudioTestsDir}/tests_Note.cpp
