@@ -27,15 +27,16 @@ namespace Audio
 /** @brief A BufferBase is a helper base class for any Buffer or BufferView */
 class alignas_quarter_cacheline Audio::Internal::BufferBase
 {
+public:
     /** @brief Get data pointer reintrepreted to a given type */
     template<typename Type>
     [[nodiscard]] Type *data(const Channel channel) noexcept
-        { return reinterpret_cast<Type *>(_data.get() + _channelByteSize * static_cast<std::uint32_t>(channel)); }
+        { return reinterpret_cast<Type *>(_data + _channelByteSize * static_cast<std::uint32_t>(channel)); }
 
     /** @brief Get constant data pointer reintrepreted to a given type */
     template<typename Type>
     [[nodiscard]] const Type *data(const Channel channel) const noexcept
-        { return reinterpret_cast<const Type *>(_data.get() + _channelByteSize * static_cast<std::uint32_t>(channel)); }
+        { return reinterpret_cast<const Type *>(_data + _channelByteSize * static_cast<std::uint32_t>(channel)); }
 
     /** @brief Get the byte data pointer */
     [[nodiscard]] std::byte *byteData(void) noexcept { return _data; }
@@ -73,7 +74,7 @@ protected:
 static_assert_fit_quarter_cacheline(Audio::Internal::BufferBase);
 
 /** @brief A Buffer manage ownership of his data */
-class Audio::Buffer : public Audio::Internal::BufferBase
+class alignas_quarter_cacheline Audio::Buffer : public Audio::Internal::BufferBase
 {
 public:
     /** @brief Allocate the buffer */

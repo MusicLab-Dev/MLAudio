@@ -24,7 +24,7 @@ class alignas_half_cacheline Audio::Control
 public:
     /** @brief Construct a control out of its parameter ID and value */
     Control(const ParamID paramID, const ParamValue value) noexcept
-        : _paramID(paramID), _value(value) {}
+        : _manualPoint(value), _paramID(paramID) {}
 
     /** @brief Check if the control is muted (not active) or not */
     [[nodiscard]] bool muted(void) const noexcept { return _muted; }
@@ -61,11 +61,11 @@ public:
 
 private:
     Point           _manualPoint {};
+    Automations     _automations { 0u };
     ParamID         _paramID {};
     std::uint16_t   _automationMutedStates {};
     bool            _manualMode { false };
     bool            _muted { false };
-    Automations     _automations { 0u };
 };
 
 #include "Control.ipp"

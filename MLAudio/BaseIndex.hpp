@@ -21,7 +21,7 @@ namespace Audio
 
 
 /** @brief Beat range */
-struct alignas(8) BeatRange
+struct alignas(8) Audio::BeatRange
 {
     Beat from {};
     Beat to {};
@@ -33,7 +33,7 @@ struct alignas(8) BeatRange
 static_assert_fit(Audio::BeatRange, 8);
 
 /** @brief Time range */
-struct alignas(8) TimeRange
+struct alignas(8) Audio::TimeRange
 {
     TimeIndex from {};
     TimeIndex to {};

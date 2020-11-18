@@ -27,6 +27,9 @@ struct alignas_quarter_cacheline Audio::Point
         Linear, Fast, Slow
     };
 
+    Point(void) = default;
+    Point(const ParamValue value_) : value(value_) {}
+
     Beat                    beat {};
     alignas(2) CurveType    type { CurveType::Linear };
     std::int16_t            curveRate {}; // We may change this to unsigned 24bits for better precision
