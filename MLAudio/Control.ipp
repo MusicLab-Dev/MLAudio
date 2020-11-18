@@ -3,6 +3,14 @@
  * @ Description: Control
  */
 
+inline bool Audio::Control::setMuted(const bool muted) noexcept
+{
+    if (_muted == muted)
+        return false;
+    _muted = muted;
+    return true;
+}
+
 inline bool Audio::Control::setAutomationMutedState(const std::size_t index, const bool state) noexcept
 {
     if (isAutomationMuted(index) == state)

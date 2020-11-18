@@ -15,11 +15,11 @@ inline bool Partition::setMuted(const bool muted) noexcept
     return true;
 }
 
-inline bool Partition::setChannels(const Channels channels) noexcept
+inline bool Partition::setMidiChannels(const MidiChannels midiChannels) noexcept
 {
-    if (channels == _channel)
+    if (midiChannels == _channel)
         return false;
-    _channel = channels;
+    _channel = midiChannels;
     return true;
 }
 

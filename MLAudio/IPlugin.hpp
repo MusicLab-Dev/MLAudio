@@ -26,33 +26,45 @@ public:
 
     // virtual ParameterDescriptors getParameterDescriptors(void) const = 0;
 
+    /** @brief  */
     static PluginFactoryPtr GetFactory(void);
+    /** @brief  */
     static void SetFactory(PluginFactoryPtr factory);
 
+    /** @brief  */
     virtual Flags getFlags(void) const noexcept = 0;
 
-    virtual bool receiveAudio(const Buffers &outputs) noexcept = 0;
-    virtual void sendAudio(Buffers &inputs) noexcept = 0;
+    /** @brief  */
+    virtual void sendAudio(const BufferViews &inputs) noexcept = 0;
+    /** @brief  */
+    virtual void receiveAudio(BufferView output) noexcept = 0;
 
-    virtual bool receiveNotes(const Notes &notes) noexcept = 0;
-    virtual void sendNotes(Notes &notes) noexcept = 0;
+    /** @brief  */
+    virtual void sendNotes(const Notes &notes) noexcept = 0;
+    /** @brief  */
+    virtual void receiveNotes(Notes &notes) noexcept = 0;
 
-    virtual bool receiveControls(const Controls &controls) noexcept = 0;
-    virtual bool sendControls(Controls &controls) noexcept = 0;
 
-    virtual bool receiveSync(const Tempo &tempo) noexcept = 0;
-    virtual void sendSync(Tempo &tempo) noexcept = 0;
+    /** @brief  */
+    virtual void sendControls(const Controls &controls) noexcept = 0;
 
-    virtual void onAudioGenerationStarted(const TimeRange &range) noexcept = 0;
+    /** @brief  */
+    virtual void sendSync(const Tempo &tempo) noexcept = 0;
+    /** @brief  */
+    virtual void receiveSync(Tempo &tempo) noexcept = 0;
+
+    /** @brief  */
+    virtual void onAudioGenerationStarted(void) noexcept = 0;
     virtual void onAudioGenerationStopped(void) noexcept = 0;
     virtual void onAudioBlockGenerated(void) noexcept = 0;
 
+    /** @brief Various flags helpers */
     [[nodiscard]] inline bool hasAudioInput(void) const noexcept    { return static_cast<std::size_t>(getFlags()) & static_cast<std::size_t>(Flags::AudioInput); }
     [[nodiscard]] inline bool hasAudioOutput(void) const noexcept   { return static_cast<std::size_t>(getFlags()) & static_cast<std::size_t>(Flags::AudioOutput); }
     [[nodiscard]] inline bool hasNoteInput(void) const noexcept     { return static_cast<std::size_t>(getFlags()) & static_cast<std::size_t>(Flags::NoteInput); }
     [[nodiscard]] inline bool hasNoteOutput(void) const noexcept    { return static_cast<std::size_t>(getFlags()) & static_cast<std::size_t>(Flags::NoteOutput); }
     [[nodiscard]] inline bool hasControlInput(void) const noexcept  { return static_cast<std::size_t>(getFlags()) & static_cast<std::size_t>(Flags::ControlInput); }
-    [[nodiscard]] inline bool hasControlOutput(void) const noexcept { return static_cast<std::size_t>(getFlags()) & static_cast<std::size_t>(Flags::ControlOutput); }
     [[nodiscard]] inline bool hasSyncInput(void) const noexcept     { return static_cast<std::size_t>(getFlags()) & static_cast<std::size_t>(Flags::SyncInput); }
     [[nodiscard]] inline bool hasSyncOutput(void) const noexcept    { return static_cast<std::size_t>(getFlags()) & static_cast<std::size_t>(Flags::SyncOutput); }
+
 };

@@ -10,13 +10,13 @@
 namespace Audio
 {
     class Connection;
-
-    using Connections = Core::FlatVector<Connection>;
 };
 
-class alignas(16) Audio::Connection
+/** @brief A node connection */
+class alignas_quarter_cacheline Audio::Connection
 {
 public:
+    /** @brief Connection type */
     enum class Type : uint32_t {
         Audio, Midi
     };
@@ -26,5 +26,4 @@ private:
     Type        _type { Type::Audio };
 };
 
-static_assert(alignof(Audio::Connection) == 16, "Connection must be aligned to 16 bytes !");
-static_assert(sizeof(Audio::Connection) == 16, "Connection must take 16 bytes !");
+static_assert_fit_quarter_cacheline(Audio::Connection);

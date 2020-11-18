@@ -51,5 +51,3 @@ struct Audio::Note
 };
 
 #include "Note.ipp"
-
-static_assert(sizeof(Audio::Note) == 16, "Note must take 16 bytes !");

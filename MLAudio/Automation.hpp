@@ -12,12 +12,15 @@ namespace Audio
     class Automation;
     struct Point;
 
+    /** @brief A list of automations */
     using Automations = Core::FlatVector<Automation>;
+
+    /** @brief A sorted list of points */
     using Points = Core::SortedFlatVector<Point>;
 };
 
 /** @brief Represent a point in an automation curve */
-struct alignas(16) Audio::Point
+struct alignas_quarter_cacheline Audio::Point
 {
     /** @brief Describe the interpolation type between points */
     enum class CurveType : std::uint8_t {
@@ -30,12 +33,10 @@ struct alignas(16) Audio::Point
     ParamValue              value {};
 };
 
-static_assert(alignof(Audio::Point) == 16, "Point must be aligned to 16 bytes !");
-static_assert(sizeof(Audio::Point) == 16, "Point must take 16 bytes !");
-
+static_assert_fit_quarter_cacheline(Audio::Point);
 
 /** @brief An automation hold a curve used to change parameters over time, it may contains multiple instances which describe where the automation appears over time */
-class alignas(16) Audio::Automation
+class alignas_quarter_cacheline Audio::Automation
 {
 public:
     /** @brief Get a reference to automation points */
@@ -55,5 +56,4 @@ private:
     BeatRanges      _instances { 0u };
 };
 
-static_assert(alignof(Audio::Automation) == 16, "Automation must be aligned to 16 bytes !");
-static_assert(sizeof(Audio::Automation) == 16, "Automation must take 16 bytes !");
+static_assert_fit_quarter_cacheline(Audio::Automation);

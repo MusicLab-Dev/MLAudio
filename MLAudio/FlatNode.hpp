@@ -14,7 +14,7 @@ namespace Audio
     using FlatTree = Core::FlatVector<FlatNode>;
 };
 
-struct alignas(16) Audio::FlatNode
+struct alignas_quarter_cacheline Audio::FlatNode
 {
     enum class Type : std::uint32_t {
         Audio   = 1,
@@ -26,5 +26,4 @@ struct alignas(16) Audio::FlatNode
     Type    type { Type::Audio };
 };
 
-static_assert(alignof(Audio::FlatNode) == 16, "FlatNode must be aligned to 16 bytes !");
-static_assert(sizeof(Audio::FlatNode) == 16, "FlatNode must take 16 bytes !");
+static_assert_fit_quarter_cacheline(Audio::FlatNode);

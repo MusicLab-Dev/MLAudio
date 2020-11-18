@@ -10,11 +10,9 @@
 namespace Audio
 {
     class Partition;
-
-    using Partitions = Core::FlatVector<Partition>;
 };
 
-class Audio::Partition
+class alignas_half_cacheline Audio::Partition
 {
 public:
     /** @brief Get the internal notes */
@@ -41,11 +39,11 @@ public:
     bool setMuted(const bool muted) noexcept;
 
 
-    /** @brief Get the internal channels */
-    [[nodiscard]] Channels channels(void) const noexcept { return _channel; }
+    /** @brief Get the internal midiChannels */
+    [[nodiscard]] MidiChannels midiChannels(void) const noexcept { return _channel; }
 
-    /** @brief Set the internal channels */
-    bool setChannels(const Channels channels) noexcept;
+    /** @brief Set the internal midiChannels */
+    bool setMidiChannels(const MidiChannels midiChannels) noexcept;
 
 
     /** @brief Get the name of the partition */
@@ -63,10 +61,10 @@ private:
     TimeRanges          _instances {};
     Core::FlatString    _name {};
     NoteIndex           _lastID {};
-    Channels            _channel { 0u };
+    MidiChannels        _channel { 0u };
     bool                _muted { false };
 };
 
 #include "Partition.ipp"
 
-static_assert(sizeof(Audio::Partition) == 32, "Partition must take 32 bytes !");
+static_assert_fit_half_cacheline(Audio::Partition);

@@ -19,11 +19,11 @@ inline bool Audio::Device::setFormat(const Device::Format format) noexcept
     return true;
 }
 
-inline bool Audio::Device::setChannels(const Channels channels) noexcept
+inline bool Audio::Device::setMidiChannels(const MidiChannels midiChannels) noexcept
 {
-    if (channels == _channels)
+    if (midiChannels == _midiChannels)
         return false;
-    _channels = channels;
+    _midiChannels = midiChannels;
     return true;
 }
 

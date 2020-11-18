@@ -28,9 +28,8 @@ public:
         NoteInput       = 1 << 2,
         NoteOutput      = 1 << 3,
         ControlInput    = 1 << 4,
-        ControlOutput   = 1 << 5,
-        SyncInput       = 1 << 6,
-        SyncOutput      = 1 << 7,
+        SyncInput       = 1 << 5,
+        SyncOutput      = 1 << 6,
     };
 
     enum class SDK : std::uint32_t {

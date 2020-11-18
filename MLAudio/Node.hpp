@@ -19,14 +19,21 @@ namespace Audio
 {
     class Node;
 
+    /** @brief Handler to a node */
     using NodePtr = std::unique_ptr<Node>;
 
-    // ReplaceCore::FlatVector ??
+    /** @brief A list of nodes */
     using Nodes = Core::FlatVector<NodePtr>;
+
+    /** @brief A list of connections */
+    using Connections = Core::FlatVector<Connection>;
+
+    /** @brief A list of partitions */
+    using Partitions = Core::FlatVector<Partition>;
 };
 
 /** @brief A node contains a plugin, a partition table and an automation table */
-class alignas(64) Audio::Node
+class alignas_double_cacheline Audio::Node
 {
 public:
     /** @brief Default constructor */
@@ -109,10 +116,10 @@ public:
 
 
     /** @brief Get a reference to the node cache */
-    // [[nodiscard]] Buffer &cache(void) noexcept { return _cache; }
+    [[nodiscard]] Buffer &cache(void) noexcept { return _cache; }
 
     /** @brief Get a constant reference to the node cache */
-    // [[nodiscard]] const Buffer &cache(void) const noexcept { return _cache; }
+    [[nodiscard]] const Buffer &cache(void) const noexcept { return _cache; }
 
 
     /** @brief Generate an audio block */
@@ -126,20 +133,19 @@ public:
 
 
 private:
-    bool                _muted { false };
-    bool                _dirty { false };
-    IPlugin::Flags      _flags { /* IPlugin::Flags::AudioOutput */ };
-    Color               _color { 0u };
-    Core::FlatString    _name {};
-    PluginPtr           _plugin { nullptr };
-    Controls            _controls {};
-    Partitions          _partitions {};
-    Nodes               _children {};
-    Connections         _connections {};
-    Buffer              _cache {};
+    PluginPtr           _plugin { nullptr }; // 8
+    Nodes               _children {}; // 8
+    Connections         _connections {}; // 8
+    Partitions          _partitions {}; // 8
+    Buffer              _cache; // 16
+    Controls            _controls {}; // 8
+    bool                _muted { false }; // 1
+    bool                _dirty { false }; // 1
+    IPlugin::Flags      _flags {}; // 2
+    Color               _color { 0u }; // 4
+    Core::FlatString    _name {}; // 8
 };
 
-#include "Node.ipp"
+static_assert_fit_double_cacheline(Audio::Node);
 
-static_assert(alignof(Audio::Node) == 64, "Node must be aligned to 64 bytes !");
-static_assert(sizeof(Audio::Node) == 64, "Node must take 64 bytes !");
+#include "Node.ipp"

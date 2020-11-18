@@ -13,21 +13,24 @@ namespace Audio
 {
     class Control;
 
+    /** @brief A list of controls */
     using Controls = Core::FlatVector<Control>;
 };
 
 /** @brief A control describe how to change a plugin parameter over time (both Production & Live).
  * It contains a set of 16 automations. */
-class alignas(32) Audio::Control
+class alignas_half_cacheline Audio::Control
 {
 public:
-    Control(const ParamID paramID) : _paramID(paramID) {}
+    /** @brief Construct a control out of its parameter ID and value */
+    Control(const ParamID paramID, const ParamValue value) noexcept
+        : _paramID(paramID), _value(value) {}
 
     /** @brief Check if the control is muted (not active) or not */
     [[nodiscard]] bool muted(void) const noexcept { return _muted; }
 
     /** @brief Set the muted state of the control */
-    void setMuted(bool muted) noexcept { _muted = muted; }
+    bool setMuted(const bool muted) noexcept;
 
 
     /** @brief Get the the whole automation muted states */
@@ -41,6 +44,7 @@ public:
 
     /** @brief Check if the automation set if full */
     [[nodiscard]] bool isAutomationsFull(void) const noexcept;
+
 
     /** @brief Get the paramID associated to this control */
     [[nodiscard]] ParamID paramID(void) const noexcept { return _paramID; }
@@ -66,5 +70,4 @@ private:
 
 #include "Control.ipp"
 
-static_assert(alignof(Audio::Control) == 32, "Control must be aligned to 32 bytes !");
-static_assert(sizeof(Audio::Control) == 32, "Control must take 32 bytes !");
+static_assert_fit_half_cacheline(Audio::Control);

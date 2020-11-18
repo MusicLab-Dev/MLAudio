@@ -14,7 +14,7 @@ static const Device::Descriptor TestDescriptor {
     .isInput = false,
     .sampleRate = 2048u,
     .format = Device::Format::Floating32,
-    .channels = 2u,
+    .midiChannels = 2u,
     .blockSize = 2048u
 };
 

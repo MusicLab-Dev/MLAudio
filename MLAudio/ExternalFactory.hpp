@@ -22,7 +22,7 @@ private:
     char *_ptr[2];
 };
 
-class alignas(64) Audio::ExternalFactory final : public Audio::IPluginFactory
+class alignas_cacheline Audio::ExternalFactory final : public Audio::IPluginFactory
 {
 public:
     virtual std::string_view getName(void) noexcept final { return _name.toStdView(); }
@@ -46,5 +46,4 @@ private:
     char                    __pad[20] {};
 };
 
-static_assert(alignof(Audio::ExternalFactory) == 64, "ExternalFactory must be aligned to 64 bytes !");
-static_assert(sizeof(Audio::ExternalFactory) == 64, "ExternalFactory must take 64 bytes !");
+static_assert_fit_cacheline(Audio::ExternalFactory);

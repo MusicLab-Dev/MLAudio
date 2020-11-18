@@ -34,7 +34,7 @@ namespace DSP
             HighPass,
             BandPass,
             BandPass2,
-            BandStop    /* Notch */,
+            BandStop, /* Notch */
             Peak,
             LowShelf,
             HighShelf

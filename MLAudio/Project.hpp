@@ -16,7 +16,7 @@ namespace Audio
     using ProjectPtr = Project *;
 };
 
-class alignas(32) Audio::Project
+class alignas_half_cacheline Audio::Project
 {
 public:
     /** @brief PlaybackMode describe project purpose
@@ -55,5 +55,4 @@ private:
     void computeFlatTree(void);
 };
 
-static_assert(alignof(Audio::Project) == 32, "Project must be aligned to 32 bytes !");
-static_assert(sizeof(Audio::Project) == 32, "Project must take 32 bytes !");
+static_assert_fit_half_cacheline(Audio::Project);

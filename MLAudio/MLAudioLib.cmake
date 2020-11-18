@@ -40,6 +40,8 @@ set(MLAudioLibSources
 
     ${MLAudioLibDir}/Plugins/Oscillator.hpp
     ${MLAudioLibDir}/Plugins/Oscillator.ipp
+    ${MLAudioLibDir}/Plugins/SimpleDelay.hpp
+    ${MLAudioLibDir}/Plugins/SimpleDelay.ipp
     ${MLAudioLibDir}/Plugins/Sampler.hpp
     ${MLAudioLibDir}/Plugins/Sampler.ipp
 )

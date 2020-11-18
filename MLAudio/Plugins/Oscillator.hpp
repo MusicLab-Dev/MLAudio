@@ -6,6 +6,7 @@
 #pragma once
 
 #include "../IPlugin.hpp"
+// #include "../NoteManager.hpp"
 
 namespace Audio
 {
@@ -18,24 +19,25 @@ public:
 
     virtual Flags getFlags(void) const noexcept;
 
-    virtual bool receiveAudio(const Buffers &inputs) noexcept { return false; }
-    virtual void sendAudio(Buffers &outputs) noexcept {}
+    virtual void sendAudio(const BufferViews &inputs) noexcept;
+    virtual void receiveAudio(BufferView output) noexcept;
 
-    virtual bool receiveNotes(const Notes &notes) noexcept { return false; }
-    virtual void sendNotes(Notes &notes) noexcept {}
+    virtual void sendNotes(const Notes &notes) noexcept;
+    virtual void receiveNotes(Notes &notes) noexcept;
 
-    virtual bool receiveControls(const Controls &controls) noexcept { return false; }
-    virtual bool sendControls(Controls &controls) noexcept { return false; }
+    virtual void sendControls(const Controls &controls) noexcept;
 
-    virtual bool receiveSync(const Tempo &tempo) noexcept { return false; }
-    virtual void sendSync(Tempo &tempo) noexcept {}
+    virtual void sendSync(const Tempo &tempo) noexcept {}
+    virtual void receiveSync(Tempo &tempo) noexcept {}
 
-    virtual void onAudioGenerationStarted(const TimeRange &range) noexcept {}
+    virtual void onAudioGenerationStarted(void) noexcept {}
     virtual void onAudioGenerationStopped(void) noexcept {}
     virtual void onAudioBlockGenerated(void) noexcept {}
 
 private:
-    int a { 23 };
+    // NoteManager     _noteManager;
 };
+
+// static_assert_fit_half_cacheline(Audio::Oscillator);
 
 #include "Oscillator.ipp"

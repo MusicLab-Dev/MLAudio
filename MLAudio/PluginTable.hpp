@@ -24,7 +24,7 @@ namespace Audio
     using RefCounts = Core::TinyVector<std::uint32_t>;
 };
 
-class alignas(64) Audio::PluginTable
+class alignas_cacheline Audio::PluginTable
 {
 public:
     /** @brief Initialize unique instance */
@@ -85,8 +85,7 @@ private:
     PluginTable &operator=(PluginTable &&other) noexcept = delete;
 };
 
-static_assert(alignof(Audio::PluginTable) == 64, "PluginTable must be aligned to 64 bytes !");
-static_assert(sizeof(Audio::PluginTable) == 64, "PluginTable must take 64 bytes !");
+static_assert_fit_cacheline(Audio::PluginTable);
 
 #include "PluginPtr.ipp"
 

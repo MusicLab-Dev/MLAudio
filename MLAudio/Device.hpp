@@ -22,7 +22,7 @@ namespace Audio
 
 
 /** @brief Device represent an SDL audio device, it can be used either for input OR output */
-class alignas(32) Audio::Device
+class alignas_half_cacheline Audio::Device
 {
 public:
 
@@ -33,13 +33,13 @@ public:
     };
 
     /** @brief Descibes how to use a logical device and is used to retreive one */
-    struct alignas(64) Descriptor
+    struct alignas_cacheline Descriptor
     {
         std::string     name { nullptr };
         bool            isInput { true };
         int             sampleRate { 48000 };
         Format          format { Format::Floating32 };
-        Channels        channels { 2u };
+        MidiChannels        midiChannels { 2u };
         std::uint16_t   blockSize { 2048u };
     };
 
@@ -77,11 +77,11 @@ public:
     bool setFormat(const Format format) noexcept;
 
 
-    /** @brief Get the actual channels */
-    [[nodiscard]] Channels channels(void) const noexcept { return _channels; }
+    /** @brief Get the actual midiChannels */
+    [[nodiscard]] MidiChannels midiChannels(void) const noexcept { return _midiChannels; }
 
-    /** @brief Set the channels, return true if the value changed */
-    bool setChannels(const Channels channels) noexcept;
+    /** @brief Set the midiChannels, return true if the value changed */
+    bool setMidiChannels(const MidiChannels midiChannels) noexcept;
 
 
     /** @brief Get the actual audio block size */
@@ -105,12 +105,10 @@ private:
     AudioCallback       _callback { nullptr };
     int                 _sampleRate { 48000 };
     Format              _format { Format::Floating32 };
-    Channels            _channels { 2u };
+    MidiChannels            _midiChannels { 2u };
     std::uint16_t       _blockSize { 2084u };
 };
 
 #include "Device.ipp"
 
-// The audio device should be aligned to 32
-static_assert(alignof(Audio::Device) == 32, "Device must be aligned to 32 bytes !");
-// static_assert(sizeof(Audio::Device) == 24, "Device must take 24 bytes !");
+static_assert_fit_half_cacheline(Audio::Device);
