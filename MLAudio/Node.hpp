@@ -40,7 +40,7 @@ public:
     Node(void) noexcept = default;
 
     /** @brief Construct a node using an explicit plugin */
-    // Node(PluginPtr &&plugin) noexcept { setPlugin(std::move(plugin)); }
+    Node(PluginPtr &&plugin) noexcept { setPlugin(std::move(plugin)); }
 
     /** @brief Move constructor */
     Node(Node &&other) noexcept = default;

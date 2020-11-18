@@ -85,11 +85,14 @@ public:
             arrangement
         ) {}
 
+    /** @brief  */
+    Buffer(void) : BufferBase(nullptr, 0, ChannelArrangement::Mono) {}
+
     /** @brief Move constructor */
     Buffer(Buffer &&other) noexcept = default;
 
     /** @brief Delete the allocated buffer */
-    ~Buffer(void) noexcept { delete _data; }
+    ~Buffer(void) noexcept { if (_data) delete[] _data; }
 
     /** @brief Move assignment */
     Buffer &operator=(Buffer &&other) noexcept = default;

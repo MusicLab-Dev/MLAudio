@@ -3,6 +3,20 @@
  * @ Description: Device
  */
 
+inline void Audio::Device::InitDriver(void)
+{
+    if (SDL_Init(0))
+        throw std::runtime_error(std::string("Couldn't initialize SDL: ") + SDL_GetError());
+    if (SDL_InitSubSystem(SDL_INIT_AUDIO))
+        throw std::runtime_error(std::string("Couldn't initialize SDL_Audio: ") + SDL_GetError());
+}
+
+inline void Audio::Device::ReleaseDriver(void)
+{
+    SDL_QuitSubSystem(SDL_INIT_AUDIO);
+    SDL_Quit();
+}
+
 inline bool Audio::Device::setSampleRate(const int sampleRate) noexcept
 {
     if (sampleRate == _sampleRate)
@@ -19,11 +33,11 @@ inline bool Audio::Device::setFormat(const Device::Format format) noexcept
     return true;
 }
 
-inline bool Audio::Device::setMidiChannels(const MidiChannels midiChannels) noexcept
+inline bool Audio::Device::setChannelArrangement(const ChannelArrangement channelArrangement) noexcept
 {
-    if (midiChannels == _midiChannels)
+    if (channelArrangement == _channelArrangement)
         return false;
-    _midiChannels = midiChannels;
+    _channelArrangement = channelArrangement;
     return true;
 }
 

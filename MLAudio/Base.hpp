@@ -53,8 +53,8 @@ namespace Audio
 
     /** @brief Audio channels arrangement */
     enum class ChannelArrangement : std::uint8_t {
-        Mono = 0,
-        Stereo
+        Mono = 1,
+        Stereo = 2
     };
 
     /** @brief Audio channels */

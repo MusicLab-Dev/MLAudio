@@ -65,6 +65,6 @@ private:
     void incrementIdx(Index &index) noexcept;
 };
 
-#include "SimpleDelay.ipp"
-
 static_assert_fit_half_cacheline(Audio::SimpleDelay);
+
+#include "SimpleDelay.ipp"

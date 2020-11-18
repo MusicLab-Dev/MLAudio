@@ -1,6 +1,6 @@
 /**
  * @ Author: Pierre Veysseyre
- * @ Description: Unit tests of Instance class
+ * @ Description: Unit tests of Control class
  */
 
 #include <gtest/gtest.h>
@@ -11,7 +11,7 @@ using namespace Audio;
 
 TEST(Control, AutomationMutedState)
 {
-    Control control(23);
+    Control control(23, 0);
 
     control.setAutomationMutedState(1, true);
     control.setAutomationMutedState(3, true);

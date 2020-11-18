@@ -5,8 +5,6 @@
 
 #pragma once
 
-#include <bitset>
-
 #include "Automation.hpp"
 
 namespace Audio

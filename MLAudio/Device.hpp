@@ -78,10 +78,10 @@ public:
 
 
     /** @brief Get the actual midiChannels */
-    [[nodiscard]] MidiChannels midiChannels(void) const noexcept { return _midiChannels; }
+    [[nodiscard]] ChannelArrangement channelArrangement(void) const noexcept { return _channelArrangement; }
 
-    /** @brief Set the midiChannels, return true if the value changed */
-    bool setMidiChannels(const MidiChannels midiChannels) noexcept;
+    /** @brief Set the channelArrangement, return true if the value changed */
+    bool setChannelArrangement(const ChannelArrangement channelArrangement) noexcept;
 
 
     /** @brief Get the actual audio block size */
@@ -92,10 +92,10 @@ public:
 
 
     /** @brief Initialize the backend audio driver */
-    static void InitDriver(void) { SDL_Init(SDL_INIT_AUDIO); }
+    static void InitDriver(void);
 
     /** @brief Release the backend audio driver */
-    static void ReleaseDriver(void) { SDL_Quit(); }
+    static void ReleaseDriver(void);
 
     /** @brief Get all device descriptors */
     static Descriptors GetDeviceDescriptors(void);
@@ -105,7 +105,7 @@ private:
     AudioCallback       _callback { nullptr };
     int                 _sampleRate { 48000 };
     Format              _format { Format::Floating32 };
-    MidiChannels            _midiChannels { 2u };
+    ChannelArrangement  _channelArrangement { ChannelArrangement::Stereo };
     std::uint16_t       _blockSize { 2084u };
 };
 
