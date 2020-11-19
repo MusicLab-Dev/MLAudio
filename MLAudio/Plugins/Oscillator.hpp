@@ -40,10 +40,10 @@ public:
     virtual void onAudioBlockGenerated(void) noexcept {}
 
 private:
-    DSP::EnveloppeGenerator<DSP::GeneratorType::ADSR> _enveloppe;
     NoteManagerPtr          _noteManager;
+    DSP::EnveloppeGenerator<DSP::GeneratorType::ADSR> _enveloppe;
 };
 
-// static_assert_fit_cacheline(Audio::Oscillator);
+static_assert_fit_cacheline(Audio::Oscillator);
 
 #include "Oscillator.ipp"
