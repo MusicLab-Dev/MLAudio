@@ -6,7 +6,10 @@
 inline void Audio::NoteManager::processNotes(const Notes &notes) noexcept
 {
     for (auto &note : notes) {
+        _cache[note.key].key = note.key;
         _cache[note.key].active = (note.type == Note::EventType::On);
+        _cache[note.key].velocity = note.velocity;
+        _cache[note.key].tunning = note.tunning;
     }
 }
 

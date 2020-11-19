@@ -19,7 +19,7 @@ struct alignas_eighth_cacheline Audio::FlatNote
     FlatNote(void) = default;
 
     /** @brief Custom constructor */
-    FlatNote(const Key key_, const Velocity velocity_, const Tuning tunning_ = 0u)
+    FlatNote(const Key key_, const Velocity velocity_, const Tuning tunning_)
         : key(key_), velocity(velocity_), tunning(tunning_) {}
 
 

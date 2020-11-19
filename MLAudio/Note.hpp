@@ -23,7 +23,8 @@ struct Audio::Note
         On, Off, PolyPressure
     };
 
-    Note(const BeatRange &r, Key k = 69, Velocity vel = 0x7F) : range(r), key(k), velocity(vel) {}
+    Note(const BeatRange &range_, Key key_ = 69, Velocity velocity_ = 0x7F, Tuning tunning_ = 0u)
+        : range(range_), key(key_), velocity(velocity_), tunning(tunning_) {}
 
     /** @brief Check if an another note is the same */
     [[nodiscard]] inline bool operator==(const Note &other) const noexcept;

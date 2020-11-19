@@ -15,6 +15,8 @@ set(MLAudioTestsSources
     ${MLAudioTestsDir}/tests_UtilsMidi.cpp
     ${MLAudioTestsDir}/tests_Biquad.cpp
 
+    ${MLAudioTestsDir}/tests_NoteManager.cpp
+
     ${MLAudioTestsDir}/tests_IPlugin.cpp
     ${MLAudioTestsDir}/tests_EnveloppeGenerator.cpp
 )
