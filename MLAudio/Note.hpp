@@ -16,6 +16,7 @@ namespace Audio
     using Notes = Core::FlatVector<Note>;
 };
 
+/** @brief Default Note */
 struct Audio::Note
 {
     enum class EventType : std::uint8_t {

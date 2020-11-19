@@ -11,6 +11,7 @@
 #include <MLCore/FlatVector.hpp>
 #include <MLCore/FlatString.hpp>
 
+#include "BaseDevice.hpp"
 #include "BaseIndex.hpp"
 
 namespace Core

@@ -6,16 +6,21 @@
 #pragma once
 
 #include "../IPlugin.hpp"
-// #include "../NoteManager.hpp"
+#include "Managers/NoteManager.hpp"
+#include "../EnveloppeGenerator.hpp"
 
 namespace Audio
 {
     class Oscillator;
 };
 
-class Audio::Oscillator final : public Audio::IPlugin
+class alignas_cacheline Audio::Oscillator final : public Audio::IPlugin
 {
 public:
+    /** @brief Describe the waveform of the oscillator */
+    enum class Waveform : std::uint8_t {
+        Sine, Triangle, Saw, Square
+    };
 
     virtual Flags getFlags(void) const noexcept;
 
@@ -35,9 +40,10 @@ public:
     virtual void onAudioBlockGenerated(void) noexcept {}
 
 private:
-    // NoteManager     _noteManager;
+    DSP::EnveloppeGenerator<DSP::GeneratorType::ADSR> _enveloppe;
+    NoteManagerPtr          _noteManager;
 };
 
-// static_assert_fit_half_cacheline(Audio::Oscillator);
+static_assert_fit_cacheline(Audio::Oscillator);
 
 #include "Oscillator.ipp"

@@ -8,6 +8,7 @@ set(MLAudioLibSources
     ${MLAudioLibDir}/AScheduler.hpp
     ${MLAudioLibDir}/Automation.hpp
     ${MLAudioLibDir}/Base.hpp
+    ${MLAudioLibDir}/BaseDevice.hpp
     ${MLAudioLibDir}/BaseIndex.hpp
     ${MLAudioLibDir}/UtilsMidi.hpp
     ${MLAudioLibDir}/Buffer.hpp
@@ -27,6 +28,7 @@ set(MLAudioLibSources
     ${MLAudioLibDir}/Partition.hpp
     ${MLAudioLibDir}/Partition.ipp
     ${MLAudioLibDir}/Note.hpp
+    ${MLAudioLibDir}/FlatNote.hpp
     ${MLAudioLibDir}/Note.ipp
     ${MLAudioLibDir}/PluginPtr.hpp
     ${MLAudioLibDir}/PluginTable.hpp
@@ -34,9 +36,9 @@ set(MLAudioLibSources
     ${MLAudioLibDir}/PluginTable.ipp
     ${MLAudioLibDir}/Project.hpp
     ${MLAudioLibDir}/Project.cpp
-    ${MLAudioLibDir}/Biquad.hpp
-    ${MLAudioLibDir}/Biquad.cpp
-    ${MLAudioLibDir}/Biquad.ipp
+
+    ${MLAudioLibDir}/Plugins/Managers/NoteManager.hpp
+    ${MLAudioLibDir}/Plugins/Managers/NoteManager.ipp
 
     ${MLAudioLibDir}/Plugins/Oscillator.hpp
     ${MLAudioLibDir}/Plugins/Oscillator.ipp
@@ -44,6 +46,12 @@ set(MLAudioLibSources
     ${MLAudioLibDir}/Plugins/SimpleDelay.ipp
     ${MLAudioLibDir}/Plugins/Sampler.hpp
     ${MLAudioLibDir}/Plugins/Sampler.ipp
+
+    ${MLAudioLibDir}/Biquad.hpp
+    ${MLAudioLibDir}/Biquad.cpp
+    ${MLAudioLibDir}/Biquad.ipp
+    ${MLAudioLibDir}/EnveloppeGenerator.hpp
+    ${MLAudioLibDir}/EnveloppeGenerator.ipp
 )
 
 add_library(${PROJECT_NAME} ${MLAudioLibSources})

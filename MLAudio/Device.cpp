@@ -26,7 +26,7 @@ Device::Device(const Descriptor &descriptor, AudioCallback &&callback)
         }
     };
     const SDL_AudioSpec desiredSpec {
-        .freq = descriptor.sampleRate,
+        .freq = static_cast<int>(descriptor.sampleRate),
         .format = GetFormat(descriptor.format),
         .samples = descriptor.blockSize,
         .callback = callback,

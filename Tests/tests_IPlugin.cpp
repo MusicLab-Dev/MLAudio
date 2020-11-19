@@ -9,12 +9,12 @@
 
 using namespace Audio;
 
-static constexpr auto BlockSize = 1024u;
+static constexpr BlockSize Size = 1024u;
 static constexpr auto ChannelNumber = 2u;
 
 TEST(IPlugin, SimpleDelay)
 {
-    SimpleDelay delay (BlockSize, ChannelNumber, 10);
+    SimpleDelay delay (Size, ChannelNumber, 10);
 
     EXPECT_EQ(delay.delay(), 1);
     EXPECT_EQ(delay.readIdx(), 0);
@@ -24,7 +24,7 @@ TEST(IPlugin, SimpleDelay)
     EXPECT_EQ(delay.readIdx(), 1);
     EXPECT_EQ(delay.writeIdx(), 0);
 
-    // const auto input = BufferViews(ChannelNumber, BlockSize);
+    // const auto input = BufferViews(ChannelNumber, Size);
 
     // delay.receiveAudio(input);
     // EXPECT_EQ(delay.readIdx(), 1);

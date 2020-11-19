@@ -25,7 +25,7 @@ inline bool Audio::Device::setSampleRate(const int sampleRate) noexcept
     return true;
 }
 
-inline bool Audio::Device::setFormat(const Device::Format format) noexcept
+inline bool Audio::Device::setFormat(const Format format) noexcept
 {
     if (format == _format)
         return false;

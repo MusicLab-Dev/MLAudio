@@ -26,21 +26,15 @@ class alignas_half_cacheline Audio::Device
 {
 public:
 
-    /** @brief Format describe the bit depth (e.g. Audio headroom) of the Device
-     *  Note that the CPU works increase with the size of the format ! */
-    enum class Format : std::uint8_t {
-        Fixed8, Fixed16, Fixed32, Floating32
-    };
-
     /** @brief Descibes how to use a logical device and is used to retreive one */
     struct alignas_cacheline Descriptor
     {
         std::string     name { nullptr };
         bool            isInput { true };
-        int             sampleRate { 48000 };
+        SampleRate      sampleRate { 48000u };
         Format          format { Format::Floating32 };
-        MidiChannels        midiChannels { 2u };
-        std::uint16_t   blockSize { 2048u };
+        MidiChannels    midiChannels { 2u };
+        BlockSize       blockSize { 2048u };
     };
 
     /** @brief A list of logical device descriptors used to introspect the hardware device */
