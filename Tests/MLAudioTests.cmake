@@ -13,11 +13,12 @@ set(MLAudioTestsSources
     ${MLAudioTestsDir}/tests_Partition.cpp
     ${MLAudioTestsDir}/tests_Note.cpp
     ${MLAudioTestsDir}/tests_UtilsMidi.cpp
-    ${MLAudioTestsDir}/tests_Biquad.cpp
 
     ${MLAudioTestsDir}/tests_NoteManager.cpp
 
     ${MLAudioTestsDir}/tests_IPlugin.cpp
+
+    ${MLAudioTestsDir}/tests_Biquad.cpp
     ${MLAudioTestsDir}/tests_EnveloppeGenerator.cpp
 )
 

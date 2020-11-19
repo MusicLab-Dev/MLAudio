@@ -5,7 +5,7 @@
 
 #include <gtest/gtest.h>
 
-#include <MLAudio/Biquad.hpp>
+#include <MLAudio/DSP/Biquad.hpp>
 
 #include <iostream>
 

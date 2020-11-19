@@ -7,7 +7,7 @@
 
 #include "../IPlugin.hpp"
 #include "Managers/NoteManager.hpp"
-#include "../EnveloppeGenerator.hpp"
+#include "../DSP/EnveloppeGenerator.hpp"
 
 namespace Audio
 {

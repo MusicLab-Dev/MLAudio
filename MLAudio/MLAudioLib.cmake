@@ -47,11 +47,11 @@ set(MLAudioLibSources
     ${MLAudioLibDir}/Plugins/Sampler.hpp
     ${MLAudioLibDir}/Plugins/Sampler.ipp
 
-    ${MLAudioLibDir}/Biquad.hpp
-    ${MLAudioLibDir}/Biquad.cpp
-    ${MLAudioLibDir}/Biquad.ipp
-    ${MLAudioLibDir}/EnveloppeGenerator.hpp
-    ${MLAudioLibDir}/EnveloppeGenerator.ipp
+    ${MLAudioLibDir}/DSP/Biquad.hpp
+    ${MLAudioLibDir}/DSP/Biquad.cpp
+    ${MLAudioLibDir}/DSP/Biquad.ipp
+    ${MLAudioLibDir}/DSP/EnveloppeGenerator.hpp
+    ${MLAudioLibDir}/DSP/EnveloppeGenerator.ipp
 )
 
 add_library(${PROJECT_NAME} ${MLAudioLibSources})

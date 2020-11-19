@@ -5,7 +5,7 @@
 
 #include <gtest/gtest.h>
 
-#include <MLAudio/EnveloppeGenerator.hpp>
+#include <MLAudio/DSP/EnveloppeGenerator.hpp>
 
 using namespace Audio;
 using namespace DSP;

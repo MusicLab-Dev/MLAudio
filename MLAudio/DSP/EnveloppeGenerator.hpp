@@ -7,7 +7,7 @@
 
 #include <MLCore/Utils.hpp>
 
-#include "BaseDevice.hpp"
+#include "../BaseDevice.hpp"
 
 namespace Audio::DSP
 {
