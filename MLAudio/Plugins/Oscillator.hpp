@@ -44,6 +44,6 @@ private:
     NoteManagerPtr          _noteManager;
 };
 
-static_assert_fit_cacheline(Audio::Oscillator);
+// static_assert_fit_cacheline(Audio::Oscillator);
 
 #include "Oscillator.ipp"

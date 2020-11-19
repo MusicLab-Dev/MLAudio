@@ -6,6 +6,7 @@
 #include <gtest/gtest.h>
 
 #include <MLAudio/Plugins/SimpleDelay.hpp>
+#include <MLAudio/Plugins/Oscillator.hpp>
 
 using namespace Audio;
 
@@ -29,4 +30,12 @@ TEST(IPlugin, SimpleDelay)
     // delay.receiveAudio(input);
     // EXPECT_EQ(delay.readIdx(), 1);
     // EXPECT_EQ(delay.writeIdx(), 1);
+}
+
+TEST(IPlugin, Oscillator)
+{
+    std::cout << "Type: sizeof, alignof\n\n";
+    std::cout << "EnveloppeGenerator<ADSR>: " << sizeof(DSP::EnveloppeGenerator<DSP::GeneratorType::ADSR>) << ", " << alignof(DSP::EnveloppeGenerator<DSP::GeneratorType::ADSR>) << std::endl;
+    std::cout << "NoteManagerPtr: " << sizeof(NoteManagerPtr) << ", " << alignof(NoteManagerPtr) << std::endl;
+    std::cout << "Oscillator: " << sizeof(Oscillator) << ", " << alignof(Oscillator) << std::endl;
 }
