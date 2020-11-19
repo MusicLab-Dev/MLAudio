@@ -11,11 +11,15 @@
 using namespace Audio;
 
 static constexpr BlockSize Size = 1024u;
-static constexpr auto ChannelNumber = 2u;
+static constexpr auto Arrangement = ChannelArrangement::Stereo;
+
+using T = int;
+
+static Buffer GetBuffer(void) noexcept { return Buffer(Size * sizeof(T), Arrangement); }
 
 TEST(IPlugin, SimpleDelay)
 {
-    SimpleDelay delay (Size, ChannelNumber, 10);
+    SimpleDelay delay (Size, Arrangement, 10);
 
     EXPECT_EQ(delay.delay(), 1);
     EXPECT_EQ(delay.readIdx(), 0);
@@ -25,11 +29,16 @@ TEST(IPlugin, SimpleDelay)
     EXPECT_EQ(delay.readIdx(), 1);
     EXPECT_EQ(delay.writeIdx(), 0);
 
-    // const auto input = BufferViews(ChannelNumber, Size);
+    BufferViews input;
+    for (auto i = 0u; i < static_cast<std::size_t>(Arrangement); ++i)
+        input.push(GetBuffer());
 
-    // delay.receiveAudio(input);
-    // EXPECT_EQ(delay.readIdx(), 1);
-    // EXPECT_EQ(delay.writeIdx(), 1);
+    delay.sendAudio(input);
+    EXPECT_EQ(delay.readIdx(), 1);
+    EXPECT_EQ(delay.writeIdx(), 1);
+
+    BufferView output(GetBuffer());
+    delay.receiveAudio(output);
 }
 
 TEST(IPlugin, Oscillator)

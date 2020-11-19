@@ -21,9 +21,9 @@ public:
     /** @brief Init a simple delay with a fixed max size
      * @param cacheSize In block, use SampleRate / 'SizeInSec'
      */
-    SimpleDelay(const std::size_t blockSize, const std::size_t channelNumber, const std::size_t cacheSize) : _cache(cacheSize) {
-        // for (auto i = 0u; i < cacheSize; ++i)
-        //     _cache[i] = BufferViews(channelNumber, blockSize);
+    SimpleDelay(const std::size_t blockSize, const ChannelArrangement channelArrangement, const std::size_t cacheSize) : _cache(cacheSize) {
+        for (auto i = 0u; i < cacheSize; ++i)
+            _cache[i].push(Buffer(blockSize, channelArrangement));
     }
 
 
