@@ -8,14 +8,34 @@
 #include <MLAudio/DSP/EnveloppeGenerator.hpp>
 
 using namespace Audio;
-using namespace DSP;
 
-static constexpr SampleRate SR = 48000u;
 static constexpr BlockSize Size = 1024u;
-static constexpr auto ChannelNumber = 2u;
+static constexpr SampleRate SR = 48000u;
 
-TEST(EnveloppeGenerator, Initialization)
+using EnvAD =   DSP::EnveloppeGenerator<DSP::GeneratorType::AD>;
+using EnvAR =   DSP::EnveloppeGenerator<DSP::GeneratorType::AR>;
+using EnvADSR = DSP::EnveloppeGenerator<DSP::GeneratorType::ADSR>;
+
+
+TEST(EnveloppeGenerator, Simple_AttackDecay)
 {
-    // EnveloppeGenerator adsr;
+    EnvAD ad;
+
+    auto rB = ad.processBlock(SR, Size);
+    auto rS = ad.processSample(SR);
+
+    (void)rB;
+    (void)rS;
+}
+
+TEST(EnveloppeGenerator, Simple_AttackRelease)
+{
+    EnvAR ar;
+
+}
+
+TEST(EnveloppeGenerator, Simple_AttackDecayReleaseSustain)
+{
+    EnvADSR adsr;
 
 }

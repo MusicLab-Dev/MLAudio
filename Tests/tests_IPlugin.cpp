@@ -61,9 +61,9 @@ TEST(IPlugin, SimpleDelay)
 
 TEST(IPlugin, Oscillator)
 {
-    // std::cout << "Type: sizeof, alignof\n\n";
-    // std::cout << "EnveloppeGenerator<ADSR>: " << sizeof(DSP::EnveloppeGenerator<DSP::GeneratorType::ADSR>) << ", " << alignof(DSP::EnveloppeGenerator<DSP::GeneratorType::ADSR>) << std::endl;
-    // std::cout << "NoteManagerPtr: " << sizeof(NoteManagerPtr) << ", " << alignof(NoteManagerPtr) << std::endl;
-    // std::cout << "IPlugin: " << sizeof(IPlugin) << ", " << alignof(IPlugin) << std::endl;
-    // std::cout << "Oscillator: " << sizeof(Oscillator) << ", " << alignof(Oscillator) << std::endl;
+    // Oscillator osc;
+    // auto env = osc.enveloppe();
+
+    // env.triggerOff();
+
 }

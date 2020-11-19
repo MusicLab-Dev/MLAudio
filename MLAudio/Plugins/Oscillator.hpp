@@ -12,6 +12,8 @@
 namespace Audio
 {
     class Oscillator;
+
+    using Enveloppe = DSP::EnveloppeGenerator<DSP::GeneratorType::ADSR>;
 };
 
 class alignas_cacheline Audio::Oscillator final : public Audio::IPlugin
@@ -39,9 +41,15 @@ public:
     virtual void onAudioGenerationStopped(void) noexcept {}
     virtual void onAudioBlockGenerated(void) noexcept {}
 
+    const NoteManager *noteManager(void) const noexcept { return _noteManager.get(); }
+    NoteManager *noteManager(void) noexcept { return _noteManager.get(); }
+
+    const Enveloppe &enveloppe(void) const noexcept { return _enveloppe; }
+    Enveloppe &enveloppe(void) noexcept { return _enveloppe; }
+
 private:
-    NoteManagerPtr          _noteManager;
-    DSP::EnveloppeGenerator<DSP::GeneratorType::ADSR> _enveloppe;
+    NoteManagerPtr  _noteManager;
+    Enveloppe       _enveloppe;
 };
 
 static_assert_fit_cacheline(Audio::Oscillator);
