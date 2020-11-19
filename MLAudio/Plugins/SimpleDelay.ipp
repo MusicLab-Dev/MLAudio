@@ -21,8 +21,7 @@ inline void Audio::SimpleDelay::sendAudio(const BufferViews &inputs) noexcept
 inline void Audio::SimpleDelay::receiveAudio(BufferView output) noexcept
 {
     // need to merge the buffers in _cache[_readIdx]
-    auto r = _cache[_readIdx][0];
-    output = r;
+    output = _cache[_readIdx][0];
 }
 
 

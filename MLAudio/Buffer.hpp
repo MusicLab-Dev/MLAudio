@@ -85,7 +85,7 @@ public:
             arrangement
         ) {}
 
-    /** @brief  */
+    /** @brief Default constructor */
     Buffer(void) : BufferBase(nullptr, 0, ChannelArrangement::Mono) {}
 
     /** @brief Move constructor */
@@ -121,4 +121,23 @@ public:
 
     /** @brief Move assignment */
     BufferView &operator=(BufferView &&other) noexcept = default;
+
+    // /** @brief Merge multiple BufferView in this one */
+    // template<typename Type>
+    // [[nodiscard]] BufferView &merge(const BufferViews &views) noexcept {
+    //     const auto totalCount = views.size();
+    //     const auto bufferSize = size<Type>();
+
+    //     for (auto channel = 0u; channel < static_cast<std::uint32_t>(_arrangement); ++channel) {
+    //         auto &channelData = data<Type>(Channel(channel));
+    //         for (auto i = 0u; i < bufferSize; ++i) {
+    //             auto newData = 0;// channelData[i] / totalCount;
+    //             for (auto &view : views) {
+    //                 newData += view.data<Type>(Channel(channel))[i] / totalCount;
+    //             }
+    //             channelData[i] = newData;
+    //         }
+    //     }
+    //     return *this;
+    // }
 };

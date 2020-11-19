@@ -52,7 +52,7 @@ public:
     void setDelay(const float delay) noexcept { _delay = (delay > 1.0 ? 1.0 : (delay < 0.0 ? 0.0 : delay)); }
 
 private:
-    Cache   _cache {};
+    Cache   _cache;
     Index   _readIdx { 0u };
     Index   _writeIdx { 0u };
 
