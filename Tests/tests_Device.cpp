@@ -13,7 +13,7 @@ static const Device::Descriptor TestDescriptor {
     .name = "device-test",
     .isInput = false,
     .sampleRate = 2048u,
-    .format = Device::Format::Floating32,
+    .format = Format::Floating32,
     .midiChannels = 2u,
     .blockSize = 2048u
 };
