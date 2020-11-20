@@ -34,19 +34,24 @@ public:
     EnveloppeGeneratorBase(void) = default;
 
     /** @brief Trigger the enveloppe */
-    void triggerOn(void) noexcept { _index = 0u; }
+    void triggerOn(void) noexcept { ++_noteCount; std::cout << "On\n"; }
 
     /** @brief Stop the enveloppe */
-    void triggerOff(void) noexcept { std::cout << "Base\n"; }
+    void triggerOff(void) noexcept { if (_noteCount) --_noteCount; std::cout << "Off\n"; }
+
+    /** @brief Reset the note counter */
+    void resetTrigger(void) noexcept { _noteCount = 0u; }
 
 
 protected:
     float           _index  { 0.0 };
+    std::uint8_t    _noteCount  { 0u };
 };
 
 
 template<>
-class /*alignas_half_cacheline*/ Audio::DSP::EnveloppeGenerator<Audio::DSP::GeneratorType::ADSR>
+class /*alignas_half_cacheline*/
+    Audio::DSP::EnveloppeGenerator<Audio::DSP::GeneratorType::ADSR>
     : DSP::Internal::EnveloppeGeneratorBase
 {
 public:
@@ -58,7 +63,9 @@ public:
         : _sustain(sustain), _attack(attack), _decay(decay), _release(release) {}
 
 
-    void triggerOff(void) noexcept { std::cout << "ADSR\n"; }
+    void triggerOn(void) noexcept;
+
+    void triggerOff(void) noexcept;
 
     /** @brief Compute a singe sample */
     [[nodiscard]] float processSample(const SampleRate sampleRate) noexcept;
@@ -78,7 +85,8 @@ private:
 
 
 template<>
-class /*alignas_quarter_cacheline*/ Audio::DSP::EnveloppeGenerator<Audio::DSP::GeneratorType::AR>
+class /*alignas_quarter_cacheline*/
+    Audio::DSP::EnveloppeGenerator<Audio::DSP::GeneratorType::AR>
     : DSP::Internal::EnveloppeGeneratorBase
 {
 public:
@@ -90,7 +98,9 @@ public:
         : _attack(attack), _release(release) {}
 
 
-    void triggerOff(void) noexcept { std::cout << "AR\n"; }
+    void triggerOn(void) noexcept;
+
+    void triggerOff(void) noexcept;
 
     /** @brief Compute a singe sample */
     [[nodiscard]] float processSample(const SampleRate sampleRate) noexcept;
@@ -107,8 +117,9 @@ private:
 
 
 template<>
-class alignas_quarter_cacheline Audio::DSP::EnveloppeGenerator<Audio::DSP::GeneratorType::AD>
-    : private DSP::Internal::EnveloppeGeneratorBase
+class alignas_quarter_cacheline
+    Audio::DSP::EnveloppeGenerator<Audio::DSP::GeneratorType::AD>
+    : public DSP::Internal::EnveloppeGeneratorBase
 {
 public:
     /** @brief Default constructor */
@@ -119,7 +130,9 @@ public:
         : _attack(attack), _decay(decay) {}
 
 
-    void triggerOff(void) noexcept { std::cout << "AD\n"; }
+    void triggerOn(void) noexcept;
+
+    void triggerOff(void) noexcept;
 
     /** @brief Compute a singe sample */
     [[nodiscard]] float processSample(const SampleRate sampleRate) noexcept;
@@ -133,7 +146,7 @@ private:
     float           _decay  { 0.1 };    // In seconds
 };
 
-static_assert_fit_quarter_cacheline(Audio::DSP::EnveloppeGenerator<Audio::DSP::GeneratorType::AD>);
+// static_assert_fit_quarter_cacheline(Audio::DSP::EnveloppeGenerator<Audio::DSP::GeneratorType::AD>);
 
 
 #include "EnveloppeGenerator.ipp"

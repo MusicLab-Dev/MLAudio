@@ -21,7 +21,7 @@ namespace Audio
     namespace Internal
     {
         class BufferBase;
-    }
+    };
 };
 
 /** @brief A BufferBase is a helper base class for any Buffer or BufferView */

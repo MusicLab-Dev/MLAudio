@@ -21,6 +21,8 @@ TEST(EnveloppeGenerator, Simple_AttackDecay)
 {
     EnvAD ad;
 
+    ad.triggerOff();
+
     auto rB = ad.processBlock(SR, Size);
     auto rS = ad.processSample(SR);
 
